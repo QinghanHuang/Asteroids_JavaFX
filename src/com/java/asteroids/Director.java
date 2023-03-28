@@ -1,10 +1,9 @@
 package com.java.asteroids;
 
-import com.java.asteroids.scene.GameScene;
+import com.java.asteroids.scene.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import com.java.asteroids.scene.Index;
 
 public class Director {
 
@@ -51,6 +50,11 @@ public class Director {
      */
     public void toIndex() {
         Index.load(stage);
+
+    }
+
+    public void toHighScores() {
+        HighScore.load(stage);
 
     }
 

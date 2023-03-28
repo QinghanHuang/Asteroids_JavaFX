@@ -1,6 +1,8 @@
 package com.java.asteroids.scene;
 
 import com.java.asteroids.*;
+import com.java.asteroids.sprite.AirCraft;
+import com.java.asteroids.sprite.BackGround;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -24,9 +26,10 @@ public class GameScene {
 
     private boolean running = false;
 
-//    private Background background = new Background();
-    //储存玩家坦克
-//    private Tank self =null;
+    private BackGround background = new BackGround();
+
+//    储存玩家坦克
+    private AirCraft self =null;
     //储存子弹list
 //    private List<Bullet> bullets=new ArrayList<>();
     //储存敌方坦克
@@ -41,9 +44,12 @@ public class GameScene {
 //    private List<Tree> trees=new ArrayList<>();
 
 
-
+    /**
+     * paint of gameScene
+     * will call paint of sprite
+     */
     private void paint() {
-
+        background.paint(graphicsContext);
 
         //game over 条件
 //        if(!self.isAlive()){
@@ -99,7 +105,11 @@ public class GameScene {
         }
     }
 
-    //设置键盘的监听器
+    /**
+     * For interaction of keyboard
+     *   pass keyCode as a parameter to call self.released(keyCode);
+     *
+     */
     private class KeyProcess implements EventHandler<KeyEvent> {
 
         @Override

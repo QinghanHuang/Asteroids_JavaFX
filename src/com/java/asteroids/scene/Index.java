@@ -14,6 +14,5 @@ public class Index {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
     }
 }

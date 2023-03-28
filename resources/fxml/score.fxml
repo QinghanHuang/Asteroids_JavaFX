@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="960.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java.asteroids.controller.ScoreController">
+   <children>
+      <ImageView fitHeight="960.0" fitWidth="1440.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/game_bg.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="343.0" layoutY="82.0" prefHeight="139.0" prefWidth="752.0" text="High Scores" textFill="#fcfcfc">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Label>
+      <Label fx:id="newGame" alignment="CENTER" layoutX="606.0" layoutY="786.0" onMouseClicked="#newGameClick" onMouseEntered="#newGameEnter" onMouseExited="#newGameExit" prefHeight="99.0" prefWidth="276.0" text="NEW GAME" textFill="#fcfcfc">
+         <font>
+            <Font size="46.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

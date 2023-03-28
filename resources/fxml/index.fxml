@@ -10,7 +10,7 @@
    <children>
       <ImageView fitHeight="969.0" fitWidth="1450.0" layoutX="-1.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/background.jpg" />
+            <Image url="@../image/index_bg.jpg" />
          </image>
       </ImageView>
       <Label fx:id="play" alignment="CENTER" layoutX="572.0" layoutY="492.0" onMouseClicked="#playClick" onMouseEntered="#playEnter" onMouseExited="#playExit" prefHeight="89.0" prefWidth="281.0" text="PLAY GAME" textAlignment="CENTER" textFill="#f8f5f5">

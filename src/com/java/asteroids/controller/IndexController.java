@@ -31,6 +31,7 @@ public class IndexController {
 
     @FXML
     void scoreClick(MouseEvent event) {
+        Director.getInstance().toHighScores();
 
     }
 
