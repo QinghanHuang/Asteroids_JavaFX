@@ -10,59 +10,75 @@ public class Director {
     //set global WIDTH and HEIGHT
     public static final double WIDTH = 1440, HEIGHT = 960;
 
-    //stage 作为成员变量用于保存
+    //store stage
     private Stage stage;
-    //单例模式的导演类
+
+    //singleton mode (only one instance)
     private static Director instance = new Director();
-    //gameScene 作为成员变量用于保存
+
+    //store gameScene
     private GameScene gameScene=new GameScene();
     private Director() {
     }
 
+    //singleton mode (only one instance)
     public static Director getInstance() {
         return instance;
     }
 
     /**
-     * 初始场景
+     * initial scene
      *
      * @param stage
      */
     public void init(Stage stage) {
-        //设置Parent root
+        //set Parent root
         AnchorPane root = new AnchorPane();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         stage.setTitle("Asteroids");
-//        stage.getIcons().add(new Image("/image/logo.png"));
-        //设置窗口不能改变大小
+        //for set icon in future
+        //stage.getIcons().add(new Image("/image/logo.png"));
+
+        //can resize window
         stage.setResizable(false);
         stage.setScene(scene);
         stage.setWidth(WIDTH);
         stage.setHeight(HEIGHT);
-        //通过更改成员变量 stage 来保存stage
+
+        //set stage
         this.stage=stage;
         toIndex();
         stage.show();
     }
 
     /**
-     * 加载首页,使用stage变量
+     * load index
      */
     public void toIndex() {
         Index.load(stage);
 
     }
 
+    /**
+     * load HighScores Scene
+     */
     public void toHighScores() {
         HighScore.load(stage);
 
     }
 
+    /**
+     * load gameScene
+     */
     public void gameStart() {
         gameScene.init(stage);
 
     }
 
+    /**
+     * load game over
+     * @param success
+     */
     public void gameOver(boolean success) {
 //        gameScene.clear(stage);
 //        GameOver.load(stage,success);

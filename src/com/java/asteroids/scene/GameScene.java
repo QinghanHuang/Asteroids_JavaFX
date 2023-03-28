@@ -3,6 +3,8 @@ package com.java.asteroids.scene;
 import com.java.asteroids.*;
 import com.java.asteroids.sprite.AirCraft;
 import com.java.asteroids.sprite.BackGround;
+import com.java.asteroids.util.Group;
+import com.java.asteroids.util.Movement;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -24,24 +26,19 @@ public class GameScene {
 
     private Refresh refresh = new Refresh();
 
+    //running false means pause
     private boolean running = false;
 
     private BackGround background = new BackGround();
 
-//    储存玩家坦克
+    //store player in gameScene
     private AirCraft self =null;
-    //储存子弹list
+
+    //store bullet list
 //    private List<Bullet> bullets=new ArrayList<>();
-    //储存敌方坦克
-//    private List<Tank> enemies=new ArrayList<>();
-    //储存爆炸效果
-//    private List<Explore> explores=new ArrayList<>();
-    //储存box
-//    private List<Box> boxes=new ArrayList<>();
-    //储存Rock
-//    private List<Rock> rocks=new ArrayList<>();
-    //储存Tree
-//    private List<Tree> trees=new ArrayList<>();
+    //store asteroids
+//    private List<Asteroid> asteroids=new ArrayList<>();
+
 
 
     /**
@@ -49,9 +46,13 @@ public class GameScene {
      * will call paint of sprite
      */
     private void paint() {
+        //paint bcakground in gameScene
         background.paint(graphicsContext);
+        //paint play in gameScene
+        self.paint(graphicsContext);
 
-        //game over 条件
+
+        //game over condition
 //        if(!self.isAlive()){
 //            Director.getInstance().gameOver(false);
 //        }else if(enemies.size()==0){
@@ -65,21 +66,26 @@ public class GameScene {
         stage.getScene().setRoot(root);
         stage.getScene().setOnKeyPressed(keyProcess);
         stage.getScene().setOnKeyReleased(keyProcess);
+        //set running true
         running = true;
 
+        //initial player aircraft
+        self = new AirCraft(700, 450, Group.PLAYER, Movement.STOP, 0, this);
 
-        //初始玩家坦克
-//        self = new Tank(400, 500, Group.GREEN, Direction.STOP, Direction.UP, this);
-        //初始Sprite
+        //for initial other enemies
 //        initSprite();
         refresh.start();
     }
-    // 初始敌人
+
+    // initial enemies
     private void initSprite(){
 
     }
 
-    //清除
+    /**
+     * clear resource after game
+     * @param stage
+     */
     public void clear(Stage stage) {
         stage.getScene().removeEventHandler(KeyEvent.KEY_RELEASED, keyProcess);
         stage.getScene().removeEventHandler(KeyEvent.KEY_PRESSED, keyProcess);
@@ -95,7 +101,7 @@ public class GameScene {
 
     }
 
-    //每一帧都会自动调用AnimationTimer 来刷新页面, 我们重写handle 使用paint来重新绘制
+    //every frame it will paint whole scene once
     private class Refresh extends AnimationTimer {
         @Override
         public void handle(long l) {
@@ -119,15 +125,14 @@ public class GameScene {
                 if (keyCode.equals(KeyCode.P)) {
                     running = !running;
                 }
-//                if (self!=null) {
-//                    self.released(keyCode);
-//                }
+                if (self!=null) {
+                    self.released(keyCode);
+                }
             } else if (event.getEventType() == KeyEvent.KEY_PRESSED) {
-//                if (self!=null) {
-//                    self.pressed(keyCode);
-//                }
+                if (self!=null) {
+                    self.pressed(keyCode);
+                }
             }
-
         }
     }
 }

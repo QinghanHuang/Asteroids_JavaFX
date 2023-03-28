@@ -33,6 +33,7 @@ public abstract class  Sprite {
      * @param graphicsContext in gameScene
      */
     public void paint(GraphicsContext graphicsContext){
+
         graphicsContext.drawImage(image,x,y,width,height);
     }
 

@@ -2,16 +2,19 @@ package com.java.asteroids.sprite;
 
 import com.java.asteroids.scene.GameScene;
 import com.java.asteroids.util.Group;
+import com.java.asteroids.util.Movement;
 import javafx.scene.image.Image;
 
 public abstract class Role extends Sprite{
     private boolean alive=true;
     private Group group;
+    Movement mov;
+    double speed;
 
-    private double speed;
-
-    public Role(Image image, double x, double y, double width, double height, GameScene gameScene) {
+    public Role(Image image, double x, double y, double width, double height, Group group, Movement mov, GameScene gameScene) {
         super(image, x, y, width, height, gameScene);
+        this.group=group;
+        this.mov=mov;
     }
 
     public boolean isAlive() {
