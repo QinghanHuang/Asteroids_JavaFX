@@ -74,7 +74,6 @@ public class Director {
         gameScene.init(stage);
 
     }
-
     /**
      * load game over
      * @param success
@@ -82,6 +81,7 @@ public class Director {
     public void gameOver(boolean success) {
 //        gameScene.clear(stage);
 //        GameOver.load(stage,success);
-    }
-}
+    }}
+
+
 

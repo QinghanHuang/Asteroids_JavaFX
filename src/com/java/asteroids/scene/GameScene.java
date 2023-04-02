@@ -2,6 +2,7 @@ package com.java.asteroids.scene;
 
 import com.java.asteroids.*;
 import com.java.asteroids.sprite.AirCraft;
+import com.java.asteroids.sprite.Alien;
 import com.java.asteroids.sprite.BackGround;
 import com.java.asteroids.util.Group;
 import com.java.asteroids.util.Movement;
@@ -9,6 +10,7 @@ import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -73,13 +75,14 @@ public class GameScene {
         self = new AirCraft(700, 450, Group.PLAYER, Movement.STOP, 0, this);
 
         //for initial other enemies
-//        initSprite();
+        initSprite();
         refresh.start();
     }
 
     // initial enemies
     private void initSprite(){
-
+        Alien alien = new Alien(new Image("image/alien.png"), 200, 10,10,10);
+        alien.newAlien();
     }
 
     /**
