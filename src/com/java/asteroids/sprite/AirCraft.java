@@ -1,5 +1,6 @@
 package com.java.asteroids.sprite;
 
+import com.java.asteroids.Director;
 import com.java.asteroids.scene.GameScene;
 import com.java.asteroids.util.Group;
 import com.java.asteroids.util.Movement;
@@ -41,10 +42,10 @@ public class AirCraft extends Role {
 
     public void released(KeyCode keyCode) {
         switch (keyCode) {
-            //for fire
-//            case SPACE:
-//                fire();
-//                break;
+//            for fire
+            case SPACE:
+                fire();
+                break;
 
             case UP:
                 keyUp = false;
@@ -89,6 +90,12 @@ public class AirCraft extends Role {
 
     @Override
     public void move() {
+        //set aircraft could come back to gameScene
+        if(x<0) x= Director.WIDTH+x;
+        if(y<0) y=Director.HEIGHT+y;
+        if(x>Director.WIDTH) x=x-Director.WIDTH;
+        if(y>Director.HEIGHT) y=y-Director.HEIGHT;
+
         switch (mov) {
             case FORWARD:
                 x+=speed*Math.sin(Math.toRadians(aimDir%360));
@@ -102,6 +109,8 @@ public class AirCraft extends Role {
     }
 
     public void fire() {
+        Bullet bullet = new Bullet(x, y, getGroup(), aimDir, gameScene);
+        gameScene.getBullets().add(bullet);
 
     }
 

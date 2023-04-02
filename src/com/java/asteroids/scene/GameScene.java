@@ -1,8 +1,7 @@
 package com.java.asteroids.scene;
 
 import com.java.asteroids.*;
-import com.java.asteroids.sprite.AirCraft;
-import com.java.asteroids.sprite.BackGround;
+import com.java.asteroids.sprite.*;
 import com.java.asteroids.util.Group;
 import com.java.asteroids.util.Movement;
 import javafx.animation.AnimationTimer;
@@ -35,11 +34,15 @@ public class GameScene {
     private AirCraft self =null;
 
     //store bullet list
-//    private List<Bullet> bullets=new ArrayList<>();
+    private List<Bullet> bullets=new ArrayList<>();
+
     //store asteroids
 //    private List<Asteroid> asteroids=new ArrayList<>();
 
 
+    public List<Bullet> getBullets() {
+        return bullets;
+    }
 
     /**
      * paint of gameScene
@@ -50,6 +53,10 @@ public class GameScene {
         background.paint(graphicsContext);
         //paint play in gameScene
         self.paint(graphicsContext);
+        //paint bullets list
+        for (int i = 0; i <bullets.size() ; i++) {
+            bullets.get(i).paint(graphicsContext);
+        }
 
 
         //game over condition
