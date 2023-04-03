@@ -22,7 +22,6 @@ public class Bullet  extends Role{
             gameScene.getBullets().remove(this);
         }
 
-
         x+=speed*Math.sin(Math.toRadians(aimDir%360));
         y-=speed*Math.cos(Math.toRadians(aimDir%360));
 

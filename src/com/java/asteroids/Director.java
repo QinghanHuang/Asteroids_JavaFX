@@ -56,7 +56,6 @@ public class Director {
      */
     public void toIndex() {
         Index.load(stage);
-
     }
 
     /**
@@ -77,11 +76,11 @@ public class Director {
 
     /**
      * load game over
-     * @param success
+     * @param score
      */
-    public void gameOver(boolean success) {
+    public void gameOver(int score) {
 //        gameScene.clear(stage);
-//        GameOver.load(stage,success);
+        GameOver.load(stage,score);
     }
 }
 
