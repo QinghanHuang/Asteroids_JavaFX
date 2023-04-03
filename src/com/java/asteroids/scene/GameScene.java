@@ -36,6 +36,9 @@ public class GameScene {
     //store player in gameScene
     private AirCraft self =null;
 
+    private Alien alien=null;
+
+
     //store bullet list
 //    private List<Bullet> bullets=new ArrayList<>();
     //store asteroids
@@ -52,6 +55,9 @@ public class GameScene {
         background.paint(graphicsContext);
         //paint play in gameScene
         self.paint(graphicsContext);
+        //pain alien
+        alien.paint(graphicsContext);
+
 
 
         //game over condition
@@ -81,8 +87,7 @@ public class GameScene {
 
     // initial enemies
     private void initSprite(){
-        Alien alien = new Alien(new Image("image/alien.png"), 200, 10,10,10);
-        alien.newAlien();
+        alien = new Alien(500,500,0,this);
     }
 
     /**

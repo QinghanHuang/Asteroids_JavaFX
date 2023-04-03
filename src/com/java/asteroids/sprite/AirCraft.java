@@ -89,6 +89,8 @@ public class AirCraft extends Role {
 
     @Override
     public void move() {
+
+
         switch (mov) {
             case FORWARD:
                 x+=speed*Math.sin(Math.toRadians(aimDir%360));
