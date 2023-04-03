@@ -32,6 +32,7 @@ public class GameScene {
 
     //store player in gameScene
     private AirCraft self =null;
+    private Alien alien=null;
 
     //store bullet list
     private List<Bullet> bullets=new ArrayList<>();
@@ -53,6 +54,8 @@ public class GameScene {
         background.paint(graphicsContext);
         //paint play in gameScene
         self.paint(graphicsContext);
+        //pain alien
+        alien.paint(graphicsContext);
         //paint bullets list
         for (int i = 0; i <bullets.size() ; i++) {
             bullets.get(i).paint(graphicsContext);
@@ -80,13 +83,18 @@ public class GameScene {
         self = new AirCraft(700, 450, Group.PLAYER, Movement.STOP, 0, this);
 
         //for initial other enemies
-//        initSprite();
+        initSprite();
         refresh.start();
     }
 
     // initial enemies
     private void initSprite(){
-
+        alien = new Alien(-20,-20,0,this);
+    }
+    private void checkAlien() {
+        if (alien == null || !alien.isAlive()) {
+            alien = new Alien(-20, -20, 0, this);
+        }
     }
 
     /**
@@ -113,6 +121,10 @@ public class GameScene {
         @Override
         public void handle(long l) {
             if (running) {
+                // check if the current alien is alive, if not create a new one
+                checkAlien();
+                // call fire method of alien continuously
+                alien.fire();
                 paint();
             }
         }

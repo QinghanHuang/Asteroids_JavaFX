@@ -33,4 +33,5 @@ public class Bullet  extends Role{
         super.paint(graphicsContext);
         move();
     }
+
 }
