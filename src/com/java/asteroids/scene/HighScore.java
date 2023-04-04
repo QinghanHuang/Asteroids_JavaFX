@@ -1,5 +1,6 @@
 package com.java.asteroids.scene;
 
+import com.java.asteroids.Director;
 import com.java.asteroids.controller.GameOverController;
 import com.java.asteroids.controller.ScoreController;
 import com.java.asteroids.sprite.Bullet;
@@ -14,12 +15,7 @@ import java.util.List;
 
 public class HighScore {
 
-    //store  list
-    private static List<Score> scores=new ArrayList<>();
 
-    public static List<Score> getScores() {
-        return scores;
-    }
 
     public static void load(Stage stage){
         try {
@@ -27,11 +23,12 @@ public class HighScore {
             FXMLLoader fxmlLoader=new FXMLLoader(Index.class.getResource("/fxml/score.fxml"));
             Parent root= fxmlLoader.load();
             ScoreController scoreController=fxmlLoader.getController();
-            //show score by order
-            scoreController.setScoreList();
-            System.out.println(scores);
 
+            //get scores list
+            System.out.println(Director.getInstance().getScores());
 
+            //pass this list to setScoreList
+            scoreController.setScoreList(Director.getInstance().getScores());
 
             stage.getScene().setRoot(root);
         } catch (IOException e) {
