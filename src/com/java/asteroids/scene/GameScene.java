@@ -1,18 +1,20 @@
 package com.java.asteroids.scene;
 
 import com.java.asteroids.*;
-import com.java.asteroids.sprite.AirCraft;
-import com.java.asteroids.sprite.BackGround;
+import com.java.asteroids.sprite.*;
 import com.java.asteroids.util.Group;
 import com.java.asteroids.util.Movement;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -35,21 +37,53 @@ public class GameScene {
     private AirCraft self =null;
 
     //store bullet list
-//    private List<Bullet> bullets=new ArrayList<>();
+    private List<Bullet> bullets=new ArrayList<>();
+
+    //store lives
+    private List<ShowLives> showLives=new ArrayList<>();
+
     //store asteroids
 //    private List<Asteroid> asteroids=new ArrayList<>();
 
+    //to store score
+    //need to show in gameScene
+    private int score=100;
 
+    //to store lives
+    private int lives=3;
+
+
+    public List<Bullet> getBullets() {
+        return bullets;
+    }
 
     /**
      * paint of gameScene
      * will call paint of sprite
      */
     private void paint() {
-        //paint bcakground in gameScene
+        //paint background in gameScene
         background.paint(graphicsContext);
-        //paint play in gameScene
+
+        //paint showLives
+        for (int i = 0; i < lives; i++) {
+            showLives.get(i).paint(graphicsContext);
+        }
+
+        //paint player in gameScene
         self.paint(graphicsContext);
+        //paint bullets list
+        for (int i = 0; i <bullets.size() ; i++) {
+            bullets.get(i).paint(graphicsContext);
+        }
+        //this part show score and lives
+        graphicsContext.setFont(new Font(30));
+        graphicsContext.setFill(Color.WHITE);
+        graphicsContext.fillText("Score: "+score,20,30);
+//        graphicsContext.fillText("Lives: "+lives,20,120);
+
+        //
+
 
 
         //game over condition
@@ -63,6 +97,7 @@ public class GameScene {
 
     public void init(Stage stage) {
         AnchorPane root = new AnchorPane(canvas);
+        initButton(root);
         stage.getScene().setRoot(root);
         stage.getScene().setOnKeyPressed(keyProcess);
         stage.getScene().setOnKeyReleased(keyProcess);
@@ -73,12 +108,43 @@ public class GameScene {
         self = new AirCraft(700, 450, Group.PLAYER, Movement.STOP, 0, this);
 
         //for initial other enemies
-//        initSprite();
+        initSprite();
         refresh.start();
     }
 
     // initial enemies
     private void initSprite(){
+        for (int i = 0; i < 3; i++) {
+            showLives.add(new ShowLives(20+i*25,50));
+        }
+
+    }
+
+    private void initButton(AnchorPane root){
+        //Creat two button
+        //May use image later
+        Button backToIndex=new Button("Back");
+        Button gameOver=new Button("Over");
+
+        //set layout
+        backToIndex.setLayoutX(1350);
+        backToIndex.setLayoutY(30);
+        gameOver.setLayoutX(1350);
+        gameOver.setLayoutY(60);
+
+        //set MouseClick actions
+        backToIndex.setOnMouseClicked(event -> {
+            Director.getInstance().toIndex();
+        });
+
+        gameOver.setOnMouseClicked(event -> {
+            Director.getInstance().gameOver(score);
+        });
+
+        //Don't let button get the focus
+        backToIndex.setFocusTraversable(false);
+        gameOver.setFocusTraversable(false);
+        root.getChildren().addAll(backToIndex,gameOver);
 
     }
 

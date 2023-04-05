@@ -1,9 +1,13 @@
 package com.java.asteroids;
 
 import com.java.asteroids.scene.*;
+import com.java.asteroids.util.Score;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.io.*;
+import java.util.*;
 
 public class Director {
 
@@ -19,6 +23,12 @@ public class Director {
     //store gameScene
     private GameScene gameScene=new GameScene();
     private Director() {
+    }
+
+    private ArrayList<Score> scores;
+
+    public ArrayList<Score> getScores() {
+        return scores;
     }
 
     //singleton mode (only one instance)
@@ -45,6 +55,8 @@ public class Director {
         stage.setWidth(WIDTH);
         stage.setHeight(HEIGHT);
 
+        //load Scores From File
+        loadScoresFromFile();
         //set stage
         this.stage=stage;
         toIndex();
@@ -56,7 +68,6 @@ public class Director {
      */
     public void toIndex() {
         Index.load(stage);
-
     }
 
     /**
@@ -77,11 +88,35 @@ public class Director {
 
     /**
      * load game over
-     * @param success
+     * @param score
      */
-    public void gameOver(boolean success) {
+    public void gameOver(int score) {
 //        gameScene.clear(stage);
-//        GameOver.load(stage,success);
+        GameOver.load(stage,score);
+    }
+
+    /**
+     * load scores data from a file
+     */
+    private void loadScoresFromFile(){
+        ObjectInputStream objectInputStream= null;
+        try {
+            objectInputStream = new ObjectInputStream(new FileInputStream(new File("scores.txt")));
+            Object obj= objectInputStream.readObject();
+            scores=(ArrayList<Score>)obj;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (objectInputStream!=null){
+                try {
+                    objectInputStream.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 }
 
