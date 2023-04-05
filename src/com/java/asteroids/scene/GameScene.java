@@ -39,6 +39,9 @@ public class GameScene {
     //store bullet list
     private List<Bullet> bullets=new ArrayList<>();
 
+    //store lives
+    private List<ShowLives> showLives=new ArrayList<>();
+
     //store asteroids
 //    private List<Asteroid> asteroids=new ArrayList<>();
 
@@ -59,9 +62,15 @@ public class GameScene {
      * will call paint of sprite
      */
     private void paint() {
-        //paint bcakground in gameScene
+        //paint background in gameScene
         background.paint(graphicsContext);
-        //paint play in gameScene
+
+        //paint showLives
+        for (int i = 0; i < lives; i++) {
+            showLives.get(i).paint(graphicsContext);
+        }
+
+        //paint player in gameScene
         self.paint(graphicsContext);
         //paint bullets list
         for (int i = 0; i <bullets.size() ; i++) {
@@ -71,7 +80,7 @@ public class GameScene {
         graphicsContext.setFont(new Font(30));
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.fillText("Score: "+score,20,30);
-        graphicsContext.fillText("Lives: "+lives,20,60);
+//        graphicsContext.fillText("Lives: "+lives,20,120);
 
         //
 
@@ -99,12 +108,15 @@ public class GameScene {
         self = new AirCraft(700, 450, Group.PLAYER, Movement.STOP, 0, this);
 
         //for initial other enemies
-//        initSprite();
+        initSprite();
         refresh.start();
     }
 
     // initial enemies
     private void initSprite(){
+        for (int i = 0; i < 3; i++) {
+            showLives.add(new ShowLives(20+i*25,50));
+        }
 
     }
 

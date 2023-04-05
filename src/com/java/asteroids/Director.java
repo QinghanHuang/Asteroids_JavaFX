@@ -95,15 +95,15 @@ public class Director {
         GameOver.load(stage,score);
     }
 
+    /**
+     * load scores data from a file
+     */
     private void loadScoresFromFile(){
         ObjectInputStream objectInputStream= null;
         try {
             objectInputStream = new ObjectInputStream(new FileInputStream(new File("scores.txt")));
             Object obj= objectInputStream.readObject();
             scores=(ArrayList<Score>)obj;
-            Collections.sort(scores);
-            System.out.println(scores);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

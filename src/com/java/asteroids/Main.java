@@ -24,9 +24,14 @@ public class Main extends Application {
     @Test
     public void writeInitialScoresTest(){
         ArrayList<Score> scores=new ArrayList<>();
-        scores.add(new Score("Player1",5000));
-        scores.add(new Score("Player2",4000));
-        scores.add(new Score("Player3",3000));
+        scores.add(new Score("Player1",90));
+        scores.add(new Score("Player2",80));
+        scores.add(new Score("Player3",70));
+        scores.add(new Score("Player4",60));
+        scores.add(new Score("Player5",50));
+        scores.add(new Score("Player6",40));
+        scores.add(new Score("Player7",30));
+        scores.add(new Score("Player8",20));
 
         ObjectOutputStream objectOutputStream= null;
         try {

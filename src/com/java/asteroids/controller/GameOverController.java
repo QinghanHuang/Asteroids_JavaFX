@@ -40,7 +40,6 @@ public class GameOverController {
             throw new RuntimeException(e);
         } finally {
             if (objectOutputStream != null) {
-
                 try {
                     objectOutputStream.close();
                 } catch (IOException e) {

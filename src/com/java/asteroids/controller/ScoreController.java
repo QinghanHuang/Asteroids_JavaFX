@@ -10,6 +10,7 @@ import javafx.scene.text.*;
 import javafx.util.Callback;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ScoreController {
 
@@ -42,14 +43,12 @@ public class ScoreController {
      * set it to Text to show
      */
     public void setScoreList(ArrayList<Score> scores){
-        scoreList.setText("Top1\tClement\t500\n" +
-                "Top2\tClement\t400\n" +
-                "Top3\tClement\t300\n"+
-                "Top4\tClement\t300\n"+
-                "Top5\tClement\t300\n"+
-                "Top6\tClement\t300\n"+
-                "Top7\tClement\t300\n"+
-                "Top8\tClement\t300\n");
+        Collections.sort(scores);
+        String scoreString="";
+        for (int i = 0; i < 8; i++) {
+            scoreString+=("Top"+(i+1)+"\t"+scores.get(i).getName()+"\t"+scores.get(i).getScore()+"\n");
+        }
+        scoreList.setText(scoreString);
 
     }
 
