@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class GameScene {
     private Canvas canvas = new Canvas(Director.WIDTH, Director.HEIGHT);
     private GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
@@ -34,6 +35,8 @@ public class GameScene {
     private AirCraft self =null;
     private Alien alien=null;
 
+    private long startTime = System.currentTimeMillis();
+
     //store bullet list
     private List<Bullet> bullets=new ArrayList<>();
 
@@ -50,14 +53,17 @@ public class GameScene {
      * will call paint of sprite
      */
     private void paint() {
-        //paint bcakground in gameScene
+        //paint background in gameScene
         background.paint(graphicsContext);
-        //paint play in gameScene
+        //paint player in gameScene
         self.paint(graphicsContext);
-        //pain alien
-        alien.paint(graphicsContext);
+        //paint alien
+        if (alien != null && alien.isAlive()) {
+            alien.paint(graphicsContext);
+            alien.fire();
+        }
         //paint bullets list
-        for (int i = 0; i <bullets.size() ; i++) {
+        for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(graphicsContext);
         }
 
@@ -83,17 +89,20 @@ public class GameScene {
         self = new AirCraft(700, 450, Group.PLAYER, Movement.STOP, 0, this);
 
         //for initial other enemies
-        initSprite();
+        checkAlien();
         refresh.start();
     }
 
     // initial enemies
-    private void initSprite(){
-        alien = new Alien(-20,-20,0,this);
-    }
+
     private void checkAlien() {
+        long elapsedTime = System.currentTimeMillis() - startTime;
         if (alien == null || !alien.isAlive()) {
-            alien = new Alien(-20, -20, 0, this);
+            // check elapsed time since the game started
+            if (elapsedTime >= 60000) { // 1 minute in milliseconds
+                // create Alien with random starting position
+                alien = new Alien(0, 0, 0, this);
+            }
         }
     }
 
@@ -124,7 +133,9 @@ public class GameScene {
                 // check if the current alien is alive, if not create a new one
                 checkAlien();
                 // call fire method of alien continuously
-                alien.fire();
+                if (alien != null) {
+                    alien.fire();
+                }
                 paint();
             }
         }

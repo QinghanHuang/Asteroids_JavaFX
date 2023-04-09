@@ -25,6 +25,28 @@ public class Alien extends Role {
         this.maxX = 1440;
         this.minY = 0;
         this.maxY = 960;
+
+        // generate random initial position outside the screen
+        double newX;
+        double newY;
+        int randSide = random.nextInt(4); // generate a random number between 0 and 3
+
+        if (randSide == 0) { // top
+            newX = random.nextDouble() * (maxX - minX) + minX;
+            newY = minY;
+        } else if (randSide == 1) { // right
+            newX = maxX;
+            newY = random.nextDouble() * (maxY - minY) + minY;
+        } else if (randSide == 2) { // bottom
+            newX = random.nextDouble() * (maxX - minX) + minX;
+            newY = maxY;
+        } else { // left
+            newX = minX;
+            newY = random.nextDouble() * (maxY - minY) + minY;
+        }
+
+        this.x = newX;
+        this.y = newY;
     }
 
     @Override
