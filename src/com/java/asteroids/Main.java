@@ -13,6 +13,7 @@ import com.java.asteroids.util.Score;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.junit.Test;
 //import org.junit.Test;
 
 import java.io.*;

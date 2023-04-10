@@ -20,7 +20,7 @@ public class AirCraft extends Role {
     boolean keyUp, keyDown, keyLeft, keyRight;
 
     public AirCraft(double x, double y, Group group, Movement mov, int aimDir, GameScene gameScene) {
-        super(new Image("Images/AirCraft.png"), x, y, 100, 120, group, mov, gameScene);
+        super(new Image("image/aircraft.png"), x, y, 40, 60, group, mov, gameScene);
         this.aimDir = aimDir;
         speed = 5;
     }
@@ -104,7 +104,7 @@ public class AirCraft extends Role {
 
         // Draw the fire image behind the aircraft when the thrusters are applied
         if (mov == Movement.FORWARD) {
-            Image fireImage = new Image("Images/fire.png");
+            Image fireImage = new Image("image/trust_fire.png");
             double fireX = -width / 2; // Position the fire image centered horizontally behind the aircraft
             double fireY = -height / 2 - 15; // Position the fire image above the bottom of the aircraft
             graphicsContext.drawImage(fireImage, fireX, fireY, width, height); // Draw the fire image with the same size as the aircraft
