@@ -101,7 +101,7 @@ public class Director {
     private void loadScoresFromFile(){
         ObjectInputStream objectInputStream= null;
         try {
-            objectInputStream = new ObjectInputStream(new FileInputStream(new File("scores.txt")));
+            objectInputStream = new ObjectInputStream(new FileInputStream(new File("resources/scores.txt")));
             Object obj= objectInputStream.readObject();
             scores=(ArrayList<Score>)obj;
         } catch (IOException e) {

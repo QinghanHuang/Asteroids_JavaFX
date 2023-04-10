@@ -43,7 +43,7 @@ public class Main extends Application {
 
         ObjectOutputStream objectOutputStream= null;
         try {
-            objectOutputStream = new ObjectOutputStream(new FileOutputStream(new File("scores.txt")));
+            objectOutputStream = new ObjectOutputStream(new FileOutputStream(new File("resources/scores.txt")));
             objectOutputStream.writeObject(scores);
         } catch (IOException e) {
             throw new RuntimeException(e);
