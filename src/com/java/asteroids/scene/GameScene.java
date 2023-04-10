@@ -8,10 +8,13 @@ import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -40,8 +43,21 @@ public class GameScene {
     //store bullet list
     private List<Bullet> bullets=new ArrayList<>();
 
+    //store lives
+    private List<ShowLives> showLives=new ArrayList<>();
+
     //store asteroids
 //    private List<Asteroid> asteroids=new ArrayList<>();
+
+    //to store score
+    //need to show in gameScene
+    private int score=100;
+
+    //to store level
+    private  int level=1;
+
+    //to store lives
+    private int lives=3;
 
 
     public List<Bullet> getBullets() {
@@ -55,6 +71,12 @@ public class GameScene {
     private void paint() {
         //paint background in gameScene
         background.paint(graphicsContext);
+
+        //paint showLives
+        for (int i = 0; i < lives; i++) {
+            showLives.get(i).paint(graphicsContext);
+        }
+
         //paint player in gameScene
         self.paint(graphicsContext);
         //paint alien
@@ -66,6 +88,14 @@ public class GameScene {
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(graphicsContext);
         }
+        //this part show score and lives
+        graphicsContext.setFont(new Font(30));
+        graphicsContext.setFill(Color.WHITE);
+        graphicsContext.fillText("Score: "+score,20,30);
+        graphicsContext.fillText("LEVEL: "+level,650,30);
+
+        //
+
 
 
         //game over condition
@@ -79,6 +109,7 @@ public class GameScene {
 
     public void init(Stage stage) {
         AnchorPane root = new AnchorPane(canvas);
+        initButton(root);
         stage.getScene().setRoot(root);
         stage.getScene().setOnKeyPressed(keyProcess);
         stage.getScene().setOnKeyReleased(keyProcess);
@@ -90,10 +121,44 @@ public class GameScene {
 
         //for initial other enemies
         checkAlien();
+        initSprite();
         refresh.start();
     }
 
     // initial enemies
+
+    private void initSprite(){
+        for (int i = 0; i < 3; i++) {
+            showLives.add(new ShowLives(20+i*25,50));
+        }
+
+    }
+
+    private void initButton(AnchorPane root){
+        //Creat two button
+        //May use image later
+        Button backToIndex=new Button("Back");
+        Button gameOver=new Button("Over");
+
+        //set layout
+        backToIndex.setLayoutX(1350);
+        backToIndex.setLayoutY(30);
+        gameOver.setLayoutX(1350);
+        gameOver.setLayoutY(60);
+
+        //set MouseClick actions
+        backToIndex.setOnMouseClicked(event -> {
+            Director.getInstance().toIndex();
+        });
+
+        gameOver.setOnMouseClicked(event -> {
+            Director.getInstance().gameOver(score);
+        });
+
+        //Don't let button get the focus
+        backToIndex.setFocusTraversable(false);
+        gameOver.setFocusTraversable(false);
+        root.getChildren().addAll(backToIndex,gameOver);
 
     private void checkAlien() {
         long elapsedTime = System.currentTimeMillis() - startTime;
