@@ -24,7 +24,7 @@ public class Main extends Application {
     @Test
     public void writeInitialScoresTest(){
         ArrayList<Score> scores=new ArrayList<>();
-        scores.add(new Score("Player1",90));
+        scores.add(new Score("Player1",95));
         scores.add(new Score("Player2",80));
         scores.add(new Score("Player3",70));
         scores.add(new Score("Player4",60));
