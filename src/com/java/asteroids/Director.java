@@ -85,13 +85,13 @@ public class Director {
         gameScene.init(stage);
 
     }
-
     /**
      * load game over
      * @param score
      */
     public void gameOver(int score) {
 //        gameScene.clear(stage);
+
         GameOver.load(stage,score);
     }
 
@@ -119,4 +119,5 @@ public class Director {
         }
     }
 }
+
 
