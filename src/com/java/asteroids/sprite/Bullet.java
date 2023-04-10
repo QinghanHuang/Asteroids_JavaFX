@@ -9,10 +9,10 @@ import javafx.scene.image.Image;
 
 public class Bullet  extends Role{
     int aimDir;
-    public Bullet( double x, double y, Group group, int aimDir, GameScene gameScene) {
+    public Bullet( double x, double y,double speed, Group group, int aimDir, GameScene gameScene) {
         super(new Image("image/bullet.png"), x, y, 10, 10, group, Movement.FORWARD, gameScene);
         this.aimDir=aimDir;
-        speed=10;
+        this.speed=speed;
     }
 
     @Override

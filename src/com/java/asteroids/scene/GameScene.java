@@ -49,6 +49,9 @@ public class GameScene {
     //need to show in gameScene
     private int score=100;
 
+    //to store level
+    private  int level=1;
+
     //to store lives
     private int lives=3;
 
@@ -80,7 +83,7 @@ public class GameScene {
         graphicsContext.setFont(new Font(30));
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.fillText("Score: "+score,20,30);
-//        graphicsContext.fillText("Lives: "+lives,20,120);
+        graphicsContext.fillText("LEVEL: "+level,650,30);
 
         //
 
