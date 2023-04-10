@@ -179,7 +179,7 @@ public class AirCraft extends Role {
     }
 
     public void fire() {
-        Bullet bullet = new Bullet(x, y, getGroup(), aimDir, gameScene);
+        Bullet bullet = new Bullet(x, y, speed+10,getGroup(), aimDir, gameScene);
         gameScene.getBullets().add(bullet);
 
     }
