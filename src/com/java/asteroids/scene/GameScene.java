@@ -35,8 +35,13 @@ public class GameScene {
     private BackGround background = new BackGround();
 
     //store player in gameScene
+<<<<<<< Updated upstream
     private AirCraft self =null;
     private Alien alien=null;
+=======
+    private AirCraft self = null;
+    private List<Alien> aliens = new ArrayList<>();
+>>>>>>> Stashed changes
 
     private long startTime = System.currentTimeMillis();
 
@@ -51,10 +56,27 @@ public class GameScene {
 
     //to store score
     //need to show in gameScene
+<<<<<<< Updated upstream
     private int score=100;
 
     //to store level
     private  int level=1;
+=======
+    private int score = 100;
+    // Set a score threshold for each level increase
+    private final int SCORE_PER_LEVEL = 200;
+    // Method to update the level based on the score
+    private void updateLevel() {
+        level = score / SCORE_PER_LEVEL + 1;
+    }
+    // Call this method whenever the player's score is updated
+    public void addScore(int points) {
+        score += points;
+        updateLevel();
+    }
+    //to store level
+    private int level = 2;
+>>>>>>> Stashed changes
 
     //to store lives
     private int lives=3;
@@ -80,10 +102,29 @@ public class GameScene {
         //paint player in gameScene
         self.paint(graphicsContext);
         //paint alien
+<<<<<<< Updated upstream
         if (alien != null && alien.isAlive()) {
             alien.paint(graphicsContext);
             alien.fire();
+=======
+
+        // check if the current alien is alive, if not create a new one
+        checkAlien();
+        // call fire method of alien continuously
+//        if (alien != null) {
+//            alien.fire();
+//        }
+
+        if (aliens != null) {
+            for (Alien alien : aliens) {
+                if (alien.isAlive()) {
+                    alien.paint(graphicsContext);
+                    alien.fire();
+                }
+            }
+>>>>>>> Stashed changes
         }
+
         //paint bullets list
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(graphicsContext);
@@ -131,6 +172,8 @@ public class GameScene {
         for (int i = 0; i < 3; i++) {
             showLives.add(new ShowLives(20+i*25,50));
         }
+        aliens.clear();
+        checkAlien();
 
     }
 
@@ -162,14 +205,22 @@ public class GameScene {
 
     private void checkAlien() {
         long elapsedTime = System.currentTimeMillis() - startTime;
+<<<<<<< Updated upstream
         if (alien == null || !alien.isAlive()) {
             // check elapsed time since the game started
             if (elapsedTime >= 60000) { // 1 minute in milliseconds
+=======
+        if (aliens.size() < level) {
+            if (elapsedTime >= 6000) { // 1 minute in milliseconds
+>>>>>>> Stashed changes
                 // create Alien with random starting position
-                alien = new Alien(0, 0, 0, this);
+                Alien alien = new Alien(0, 0, 0, this);
+                aliens.add(alien);
+                startTime = System.currentTimeMillis(); // reset the timer
             }
         }
     }
+
 
     /**
      * clear resource after game

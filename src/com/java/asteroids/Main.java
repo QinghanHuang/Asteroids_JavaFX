@@ -13,7 +13,12 @@ import com.java.asteroids.util.Score;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+<<<<<<< Updated upstream
 import org.junit.Test;
+=======
+import org.junit.jupiter.api.Test;
+//import org.junit.Test;
+>>>>>>> Stashed changes
 
 import java.io.*;
 import java.util.ArrayList;
