@@ -31,4 +31,5 @@ resources/scores.txt
 scores.txt
 scores.txt
 scores.txt
-my_folder/
+.idea/
+Asteroids_JavaFX.iml
