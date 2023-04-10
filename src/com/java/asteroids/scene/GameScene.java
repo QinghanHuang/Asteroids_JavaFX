@@ -35,29 +35,29 @@ public class GameScene {
     private BackGround background = new BackGround();
 
     //store player in gameScene
-    private AirCraft self =null;
-    private Alien alien=null;
+    private AirCraft self = null;
+    private Alien alien = null;
 
     private long startTime = System.currentTimeMillis();
 
     //store bullet list
-    private List<Bullet> bullets=new ArrayList<>();
+    private List<Bullet> bullets = new ArrayList<>();
 
     //store lives
-    private List<ShowLives> showLives=new ArrayList<>();
+    private List<ShowLives> showLives = new ArrayList<>();
 
     //store asteroids
 //    private List<Asteroid> asteroids=new ArrayList<>();
 
     //to store score
     //need to show in gameScene
-    private int score=100;
+    private int score = 100;
 
     //to store level
-    private  int level=1;
+    private int level = 1;
 
     //to store lives
-    private int lives=3;
+    private int lives = 3;
 
 
     public List<Bullet> getBullets() {
@@ -79,7 +79,16 @@ public class GameScene {
 
         //paint player in gameScene
         self.paint(graphicsContext);
+
         //paint alien
+
+        // check if the current alien is alive, if not create a new one
+        checkAlien();
+        // call fire method of alien continuously
+//        if (alien != null) {
+//            alien.fire();
+//        }
+
         if (alien != null && alien.isAlive()) {
             alien.paint(graphicsContext);
             alien.fire();
@@ -91,11 +100,10 @@ public class GameScene {
         //this part show score and lives
         graphicsContext.setFont(new Font(30));
         graphicsContext.setFill(Color.WHITE);
-        graphicsContext.fillText("Score: "+score,20,30);
-        graphicsContext.fillText("LEVEL: "+level,650,30);
+        graphicsContext.fillText("Score: " + score, 20, 30);
+        graphicsContext.fillText("LEVEL: " + level, 650, 30);
 
         //
-
 
 
         //game over condition
@@ -127,18 +135,18 @@ public class GameScene {
 
     // initial enemies
 
-    private void initSprite(){
+    private void initSprite() {
         for (int i = 0; i < 3; i++) {
-            showLives.add(new ShowLives(20+i*25,50));
+            showLives.add(new ShowLives(20 + i * 25, 50));
         }
 
     }
 
-    private void initButton(AnchorPane root){
+    private void initButton(AnchorPane root) {
         //Creat two button
         //May use image later
-        Button backToIndex=new Button("Back");
-        Button gameOver=new Button("Over");
+        Button backToIndex = new Button("Back");
+        Button gameOver = new Button("Over");
 
         //set layout
         backToIndex.setLayoutX(1350);
@@ -158,13 +166,14 @@ public class GameScene {
         //Don't let button get the focus
         backToIndex.setFocusTraversable(false);
         gameOver.setFocusTraversable(false);
-        root.getChildren().addAll(backToIndex,gameOver);
+        root.getChildren().addAll(backToIndex, gameOver);
+    }
 
     private void checkAlien() {
         long elapsedTime = System.currentTimeMillis() - startTime;
         if (alien == null || !alien.isAlive()) {
             // check elapsed time since the game started
-            if (elapsedTime >= 60000) { // 1 minute in milliseconds
+            if (elapsedTime >= 6000) { // 1 minute in milliseconds
                 // create Alien with random starting position
                 alien = new Alien(0, 0, 0, this);
             }
@@ -173,6 +182,7 @@ public class GameScene {
 
     /**
      * clear resource after game
+     *
      * @param stage
      */
     public void clear(Stage stage) {
@@ -195,12 +205,7 @@ public class GameScene {
         @Override
         public void handle(long l) {
             if (running) {
-                // check if the current alien is alive, if not create a new one
-                checkAlien();
-                // call fire method of alien continuously
-                if (alien != null) {
-                    alien.fire();
-                }
+
                 paint();
             }
         }
@@ -208,8 +213,7 @@ public class GameScene {
 
     /**
      * For interaction of keyboard
-     *   pass keyCode as a parameter to call self.released(keyCode);
-     *
+     * pass keyCode as a parameter to call self.released(keyCode);
      */
     private class KeyProcess implements EventHandler<KeyEvent> {
 
@@ -220,11 +224,11 @@ public class GameScene {
                 if (keyCode.equals(KeyCode.P)) {
                     running = !running;
                 }
-                if (self!=null) {
+                if (self != null) {
                     self.released(keyCode);
                 }
             } else if (event.getEventType() == KeyEvent.KEY_PRESSED) {
-                if (self!=null) {
+                if (self != null) {
                     self.pressed(keyCode);
                 }
             }

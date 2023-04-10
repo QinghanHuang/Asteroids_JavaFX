@@ -87,7 +87,7 @@ public class Alien extends Role {
         //Otherwise, the method creates a new bullet and adds it to the game scene, and updates the lastShotTime variable.
         lastShotTime = currentTime;
         // create a new bullet and add it to the game scene
-        Bullet bullet = new Bullet(x, y, getGroup(), aimDir, gameScene);
+        Bullet bullet = new Bullet(x, y, 10,getGroup(), aimDir, gameScene);
         gameScene.getBullets().add(bullet);
     }
 
