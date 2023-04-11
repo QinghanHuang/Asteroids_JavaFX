@@ -7,10 +7,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
+import java.util.List;
+
 public class AirCraft extends Role {
     int aimDir = 0;
     double rotationSpeed = 30;
     boolean keyUp, keyDown, keyLeft, keyRight;
+    double oldX,oldY;
 
     public AirCraft(double x, double y, Group group, Movement mov, int aimDir, GameScene gameScene) {
         super(new Image("image/aircraft.png"), x, y, 40, 60, group, mov, gameScene);
@@ -89,6 +92,8 @@ public class AirCraft extends Role {
 
     @Override
     public void move() {
+        oldX = x;oldY=y;
+
         switch (mov) {
             case FORWARD:
                 x+=speed*Math.sin(Math.toRadians(aimDir%360));
@@ -98,6 +103,21 @@ public class AirCraft extends Role {
                 x-=speed*Math.sin(Math.toRadians(aimDir%360));
                 y+=speed*Math.cos(Math.toRadians(aimDir%360));
                 break;
+        }
+    }
+
+    public boolean impact(Sprite sprite) {
+        if (sprite != null && !sprite.equals(this)&& this.getContour().intersects(sprite.getContour())) {
+            x=oldX;
+            y=oldY;
+            return true;
+        }
+        return false;
+    }
+
+    public void impact(List<? extends Sprite> sprites) {
+        for(Sprite sprite:sprites){
+            this.impact(sprite);
         }
     }
 

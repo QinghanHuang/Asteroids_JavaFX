@@ -2,6 +2,7 @@ package com.java.asteroids.scene;
 
 import com.java.asteroids.*;
 import com.java.asteroids.sprite.AirCraft;
+import com.java.asteroids.sprite.Asteroid;
 import com.java.asteroids.sprite.BackGround;
 import com.java.asteroids.util.Group;
 import com.java.asteroids.util.Movement;
@@ -9,6 +10,7 @@ import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -17,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameScene {
     private Canvas canvas = new Canvas(Director.WIDTH, Director.HEIGHT);
@@ -33,12 +36,13 @@ public class GameScene {
 
     //store player in gameScene
     private AirCraft self =null;
-
     //store bullet list
 //    private List<Bullet> bullets=new ArrayList<>();
     //store asteroids
-//    private List<Asteroid> asteroids=new ArrayList<>();
-
+    private List<Asteroid> asteroids=new ArrayList<>();
+    public List<Asteroid> getAsteroids() {
+        return asteroids;
+    }
 
 
     /**
@@ -50,6 +54,28 @@ public class GameScene {
         background.paint(graphicsContext);
         //paint play in gameScene
         self.paint(graphicsContext);
+        self.impact(asteroids);
+        for(int i = 0; i< asteroids.size(); i++){
+            Asteroid asteroid = asteroids.get(i);
+            asteroid.paint(graphicsContext);
+            asteroid.impactAirCraft(self);
+        }
+
+//        background.paint(graphicsContext);
+//        self.paint(graphicsContext);
+//
+//        self.impact(boxes);
+//        self.impact(rocks);
+//
+//        for (int i = 0; i <bullets.size() ; i++) {
+//            Bullet bullet=bullets.get(i);
+//            bullet.paint(graphicsContext);
+//            bullet.impactTank(enemies);
+//            bullet.impactBox(boxes);
+//            bullet.impactRock(rocks);
+//            bullet.impactTank(self);
+//
+//        }
 
 
         //game over condition
@@ -71,15 +97,47 @@ public class GameScene {
 
         //initial player aircraft
         self = new AirCraft(700, 450, Group.PLAYER, Movement.STOP, 0, this);
-
+//
         //for initial other enemies
-//        initSprite();
+        initSprite();
         refresh.start();
     }
 
     // initial enemies
     private void initSprite(){
+        initAsteroids();
 
+    }
+
+    private  void initAsteroids(){
+//        for (int i = 0; i < 6; i++) {
+        Random random = new Random();
+        String[] aestroid_start_position = {"Top", "Right", "Bottom", "Left"};
+        int x = 0;
+        int y = 0;
+        int position = random.nextInt(4);
+        System.out.println(position);
+        System.out.println("Checkout");
+        int aimDir = 0;
+        if (position == 0){
+            y = (int) Director.HEIGHT + 90;
+            x =  random.nextInt((int) Director.WIDTH);
+        } else if (position == 1) {
+            y = random.nextInt((int) Director.HEIGHT);
+            x =  (int) Director.WIDTH + 90;
+        } else if (position == 2) {
+            y = -90;
+            x = random.nextInt((int) Director.WIDTH );
+        } else if (position == 3) {
+            x = -90;
+            y = random.nextInt((int) Director.HEIGHT);
+        }
+
+        System.out.println(y +  "Y direction");
+        System.out.println(x + " X Direction");
+        Asteroid asteroid=new Asteroid(new Image("image/asteroid_big.png"), x, y, 120, 120, Group.ASTEROID_BIG, Movement.FORWARD, this, position);
+
+        asteroids.add(asteroid);
     }
 
     /**
