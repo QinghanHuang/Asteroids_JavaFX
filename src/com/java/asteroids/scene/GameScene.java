@@ -161,7 +161,6 @@ public class GameScene {
         //for initial other enemies
         initSprite();
         checkAlien();
-        initSprite();
         refresh.start();
     }
 
@@ -213,6 +212,7 @@ public class GameScene {
         }
     }
     private  void initAsteroids(){
+        System.out.println("Initialised");
 //        for (int i = 0; i < 6; i++) {
         Random random = new Random();
         String[] aestroid_start_position = {"Top", "Right", "Bottom", "Left"};
@@ -220,7 +220,7 @@ public class GameScene {
         int y = 0;
         int position = random.nextInt(4);
         System.out.println(position);
-        System.out.println("Checkout");
+
         int aimDir = 0;
         if (position == 0){
             y = (int) Director.HEIGHT + 90;
