@@ -181,7 +181,7 @@ public class GameScene {
     private void checkAlien() {
         long elapsedTime = System.currentTimeMillis() - startTime;
         if (aliens.size() < level) {
-            if (elapsedTime >= 30000) { // 30min
+            if (elapsedTime >= 3000) { // 30min
                 // create Alien with random starting position
                 Alien alien = new Alien(0, 0, 0, this);
                 aliens.add(alien);
@@ -216,7 +216,6 @@ public class GameScene {
         @Override
         public void handle(long l) {
             if (running) {
-
                 paint();
             }
         }
