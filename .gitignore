@@ -27,3 +27,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+resources/scores.txt
+Asteroids_JavaFX.iml
+.idea
