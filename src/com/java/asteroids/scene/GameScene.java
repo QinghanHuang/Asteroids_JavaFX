@@ -95,6 +95,13 @@ public class GameScene {
             asteroid.impactAirCraft(self);
         }
 
+        for (int i = 0; i <bullets.size() ; i++) {
+            Bullet bullet=bullets.get(i);
+            bullet.paint(graphicsContext);
+            bullet.impactAsteroid(asteroids);
+
+        }
+
 //        background.paint(graphicsContext);
 //        self.paint(graphicsContext);
 //

@@ -7,6 +7,8 @@ import com.java.asteroids.util.Movement;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.List;
+
 public class Bullet  extends Role{
     int aimDir;
     public Bullet( double x, double y,double speed, Group group, int aimDir, GameScene gameScene) {
@@ -25,6 +27,23 @@ public class Bullet  extends Role{
         x+=speed*Math.sin(Math.toRadians(aimDir%360));
         y-=speed*Math.cos(Math.toRadians(aimDir%360));
 
+    }
+
+    public boolean impactAsteroid(Asteroid asteroid) {
+        // 判断子弹是否不同组
+        //并且 Contour 相交
+        if (asteroid != null && !asteroid.getGroup().equals(this.getGroup()) && this.getContour().intersects(asteroid.getContour())) {
+            asteroid.setAlive(false);
+            this.setAlive(false);
+            return true;
+        }
+        return false;
+    }
+
+    public void impactAsteroid(List<Asteroid> asteroids) {
+        for(Asteroid asteroid:asteroids){
+            this.impactAsteroid(asteroid);
+        }
     }
 
     @Override
