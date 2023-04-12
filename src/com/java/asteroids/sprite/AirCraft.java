@@ -24,7 +24,7 @@ public class AirCraft extends Role {
     double oldX,oldY;
 
     public AirCraft(double x, double y, Group group, Movement mov, int aimDir, GameScene gameScene) {
-        super(new Image("image/aircraft.png"), x, y, 40, 60, group, mov, gameScene);
+        super(new Image("image/aircraft_new.png"), x, y, 50, 100, group, mov, gameScene);
         this.aimDir = aimDir;
         speed = 5;
     }
@@ -59,7 +59,7 @@ public class AirCraft extends Role {
         switch (keyCode) {
 //            for fire
             case SPACE:
-                fire();
+//                fire();
                 break;
 
             case UP:
@@ -107,12 +107,17 @@ public class AirCraft extends Role {
         graphicsContext.rotate(aimDir);
 
         // Draw the fire image behind the aircraft when the thrusters are applied
+//        if (mov == Movement.FORWARD) {
+//            Image fireImage = new Image("image/trust_fire.png");
+//            double fireX = -width / 2; // Position the fire image centered horizontally behind the aircraft
+//            double fireY = -height / 2 - 15; // Position the fire image above the bottom of the aircraft
+//            graphicsContext.drawImage(fireImage, fireX, fireY, width, height); // Draw the fire image with the same size as the aircraft
+//        }
+
         if (mov == Movement.FORWARD) {
-            Image fireImage = new Image("image/trust_fire.png");
-            double fireX = -width / 2; // Position the fire image centered horizontally behind the aircraft
-            double fireY = -height / 2 - 15; // Position the fire image above the bottom of the aircraft
-            graphicsContext.drawImage(fireImage, fireX, fireY, width, height); // Draw the fire image with the same size as the aircraft
+            graphicsContext.drawImage(new Image("image/aircraft_fire_new.png"), -width / 2, -height / 2, width, height);
         }
+
 
         graphicsContext.drawImage(image, -width / 2, -height / 2, width, height); // Draw the aircraft
         move();
@@ -200,6 +205,7 @@ public class AirCraft extends Role {
     }
 
     public void fire() {
+        System.out.println(speed+ " Speed of Fire");
         Bullet bullet = new Bullet(x, y, speed+10,getGroup(), aimDir, gameScene);
         gameScene.getBullets().add(bullet);
 

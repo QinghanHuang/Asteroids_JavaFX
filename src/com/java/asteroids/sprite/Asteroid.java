@@ -21,10 +21,20 @@ public class Asteroid extends Role{
     public static Random random=new Random();
     public Asteroid(Image image, double x, double y, double width, double height, Group group, Movement mov, GameScene gameScene, int position) {
         super(image, x, y, width, height, group, mov, gameScene);
-        speed = 1;
+        speed = getSpeed(group);
         this.position = position;
         this.aimDir = random.nextInt(360);
         rotate(x,y);
+    }
+
+    private int getSpeed(Group group){
+        if (group == Group.ASTEROID_BIG){
+            return 1;
+        } else if (group == Group.ASTEROID_MEDIUM) {
+            return 2;
+        }else{
+            return 3;
+        }
     }
 
     private void rotate(double x, double y) {
@@ -66,8 +76,6 @@ public class Asteroid extends Role{
         if (y < -90) y = Director.HEIGHT;
         if (x > Director.WIDTH + 90) x = 0;
         if (y > Director.HEIGHT + 90) y = 0;
-//        Movement[] randomDirs=Movement.values();
-//        mov=randomDirs[random.nextInt(randomDirs.length)];
         }
 
     public boolean impactAirCraft(AirCraft airCraft) {
@@ -87,57 +95,14 @@ public class Asteroid extends Role{
         }
     }
 
-    public void splitAsteroids(){
-        System.out.println(getGroup());
-        if (getGroup() == Group.ASTEROID_BIG){
-            for (int i = 0; i <= 1; i++){
-                Asteroid asteroid=new Asteroid(new Image("image/asteroid_big.png"), x, y, 90, 90, Group.ASTEROID_MEDIUM, Movement.FORWARD, gameScene, position);
-                gameScene.getAsteroids().add(asteroid);
-            }
-
-        }else if (getGroup() == Group.ASTEROID_MEDIUM){
-            for (int i = 0; i <= 3; i++){
-                Asteroid asteroid=new Asteroid(new Image("image/asteroid_big.png"), x, y, 60, 60, Group.ASTEROID_SMALL, Movement.FORWARD, gameScene, position);
-                gameScene.getAsteroids().add(asteroid);
-            }
-
-        }
-
-
-    }
-
 
     @Override
     public void paint(GraphicsContext graphicsContext) {
         if (!isAlive()) {
-//            System.out.println(gameScene.getAsteroids().size()+ " Before Removing");
-            System.out.println(gameScene.getAsteroids());
             gameScene.getAsteroids().remove(this);
-//            System.out.println(gameScene.getAsteroids().size()+ " Intermediate Removing");
-            splitAsteroids();
-//            System.out.println(gameScene.getAsteroids().size()+ " After Removing");
+            gameScene.splitAsteroid(getGroup(), x, y, position);
             return;
         }
-
-//        switch (aimDir) {
-//            case UP:
-//                image = imageMap.get("UP");
-//                break;
-//            case DOWN:
-//                image = imageMap.get("DOWN");
-//                break;
-//            case LEFT:
-//                image = imageMap.get("LEFT");
-//                break;
-//            case RIGHT:
-//                image = imageMap.get("RIGHT");
-//                break;
-//        }
-
-//        System.out.println("CHECK PAINT");
-//        System.out.println(x);
-//        System.out.println(y);
-//        graphicsContext.rotate(rotation);
         super.paint(graphicsContext);
         move();
     }

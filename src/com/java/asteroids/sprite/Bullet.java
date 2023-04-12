@@ -30,8 +30,6 @@ public class Bullet  extends Role{
     }
 
     public boolean impactAsteroid(Asteroid asteroid) {
-        // 判断子弹是否不同组
-        //并且 Contour 相交
         if (asteroid != null && !asteroid.getGroup().equals(this.getGroup()) && this.getContour().intersects(asteroid.getContour())) {
             asteroid.setAlive(false);
             this.setAlive(false);
@@ -44,10 +42,15 @@ public class Bullet  extends Role{
         for(Asteroid asteroid:asteroids){
             this.impactAsteroid(asteroid);
         }
+
     }
 
     @Override
     public void paint(GraphicsContext graphicsContext) {
+        if (!isAlive()) {
+            gameScene.getBullets().remove(this);
+            return;
+        }
         super.paint(graphicsContext);
         move();
     }
