@@ -1,9 +1,6 @@
 package com.java.asteroids.scene;
 
 import com.java.asteroids.*;
-import com.java.asteroids.sprite.AirCraft;
-import com.java.asteroids.sprite.Asteroid;
-import com.java.asteroids.sprite.BackGround;
 import com.java.asteroids.sprite.*;
 import com.java.asteroids.util.Group;
 import com.java.asteroids.util.Movement;
@@ -93,19 +90,26 @@ public class GameScene {
             Asteroid asteroid = asteroids.get(i);
             asteroid.paint(graphicsContext);
             asteroid.impactAirCraft(self);
+            asteroid.impactAlien(alien);
+            
         }
         for (int i = 0; i <bullets.size() ; i++) {
             Bullet bullet=bullets.get(i);
             bullet.paint(graphicsContext);
             bullet.impactAsteroid(asteroids);
+            bullet.impactAlien(alien);
         }
         //paint alien
+        self.impact(alien);
         // check if the current alien is alive, if not create a new one
         checkAlien();
         if (alien != null && alien.isAlive()) {
             alien.paint(graphicsContext);
-//            alien.fire();
+            alien.fire();
         }
+        //create an alien then impactAirCraft
+        if (alien != null) {
+        alien.impactAirCraft(self);}
         //this part show score and lives
         graphicsContext.setFont(new Font(30));
         graphicsContext.setFill(Color.WHITE);

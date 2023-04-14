@@ -5,6 +5,8 @@ import com.java.asteroids.util.Group;
 import com.java.asteroids.util.Movement;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+
+import java.util.List;
 import java.util.Random;
 
 public class Alien extends Role {
@@ -91,9 +93,41 @@ public class Alien extends Role {
         gameScene.getBullets().add(bullet);
     }
 
+    
+public boolean impactAsteroid(Asteroid asteroid) {
+    if (asteroid != null && !asteroid.getGroup().equals(this.getGroup()) && this.getContour().intersects(asteroid.getContour())) {
+        asteroid.setAlive(false);
+        this.setAlive(false);
+        return true;
+    }
+    return false;
+}
+
+public void impactAsteroid(List<Asteroid> asteroids) {
+    for(Asteroid asteroid:asteroids){
+        this.impactAsteroid(asteroid);
+    }
+}
+
+public boolean impactAirCraft(AirCraft airCraft) {
+
+    if (airCraft != null  && this.getContour().intersects(airCraft.getContour())) {
+        System.out.println("Killed");
+        airCraft.setAlive(false);
+        this.setAlive(false);
+        return true;
+    }
+    return false;
+}
+
+public void impactAirCraft(List<AirCraft> airCrafts) {
+    for(AirCraft airCraft:airCrafts){
+        this.impactAirCraft(airCraft);
+    }
 }
 
 
+}
 
 
 

@@ -95,6 +95,22 @@ public class Asteroid extends Role{
         }
     }
 
+    public boolean impactAlien(Alien alien) {
+
+        if (alien != null  && this.getContour().intersects(alien.getContour())) {
+            System.out.println("Killed");
+            alien.setAlive(false);
+            this.setAlive(false);
+            return true;
+        }
+        return false;
+    }
+
+    public void impactAlien(List<Alien> aliens) {
+        for(Alien alien : aliens){
+            this.impactAlien(alien);
+        }
+    }
 
     @Override
     public void paint(GraphicsContext graphicsContext) {
