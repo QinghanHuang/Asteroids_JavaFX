@@ -2,6 +2,7 @@ package com.java.asteroids;
 
 import com.java.asteroids.scene.*;
 import com.java.asteroids.util.Score;
+import com.java.asteroids.util.SoundEffect;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -87,6 +88,7 @@ public class Director {
      * load gameScene
      */
     public void gameStart() {
+        SoundEffect.playBGM();
         gameScene.init(stage);
 
     }

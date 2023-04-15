@@ -6,9 +6,17 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public abstract class  Sprite {
-    Image image;
-    double x,y, width,height;
-    GameScene gameScene;
+    private Image image;
+     double x,y, width,height;
+     GameScene gameScene;
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
 
     public Sprite(Image image, double x, double y, double width, double height, GameScene gameScene) {
         this.image = image;

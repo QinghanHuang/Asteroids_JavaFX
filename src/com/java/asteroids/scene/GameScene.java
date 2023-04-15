@@ -150,15 +150,15 @@ public class GameScene {
         graphicsContext.fillText("LEVEL: " + level, 650, 30);
 
         //
-        graphicsContext.fillText("alien: " + aliens.size(), 20, 60);
-        graphicsContext.fillText("starts: " + asteroids.size(), 20, 90);
-        graphicsContext.fillText("bullets: " + bullets.size(), 20, 120);
-        graphicsContext.fillText("lives: " + lives, 20, 150);
-        if(self!=null){
-            graphicsContext.fillText("speedX: " + self.getSpeedX(), 20, 180);
-            graphicsContext.fillText("speedY: " + self.getSpeedY(), 20, 210);
-
-        }
+//        graphicsContext.fillText("alien: " + aliens.size(), 20, 60);
+//        graphicsContext.fillText("starts: " + asteroids.size(), 20, 90);
+//        graphicsContext.fillText("bullets: " + bullets.size(), 20, 120);
+//        graphicsContext.fillText("lives: " + lives, 20, 150);
+//        if(self!=null){
+//            graphicsContext.fillText("speedX: " + self.getSpeedX(), 20, 180);
+//            graphicsContext.fillText("speed: " + self.getSpeed(), 20, 210);
+//
+//        }
     }
 
     public void init(Stage stage) {
@@ -245,10 +245,12 @@ public class GameScene {
         //set MouseClick actions
         backToIndex.setOnMouseClicked(event -> {
             running=false;
+            SoundEffect.stopBGM();
             Director.getInstance().toIndex();
         });
 
         gameOver.setOnMouseClicked(event -> {
+            SoundEffect.stopBGM();
             Director.getInstance().gameOver(score);
         });
 
@@ -279,6 +281,7 @@ public class GameScene {
 
     public void checkGameOver(){
         if(lives==1){
+            SoundEffect.stopBGM();
             Director.getInstance().gameOver(score);
         }else{
             lives--;
@@ -287,7 +290,6 @@ public class GameScene {
     }
 
     public void splitAsteroid(AsteroidSize size, double x, double y, int pos) {
-        System.out.println(size);
         if (size == AsteroidSize.ASTEROID_BIG) {
             for (int i = 0; i < 2; i++) {
                 Asteroid asteroid = new Asteroid(new Image("image/asteroid_big.png"), x, y, 90, 90, Group.ENEMY, Movement.FORWARD, this, pos, AsteroidSize.ASTEROID_MEDIUM);

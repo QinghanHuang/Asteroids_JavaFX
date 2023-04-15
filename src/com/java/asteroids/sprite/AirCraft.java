@@ -3,8 +3,7 @@ package com.java.asteroids.sprite;
 import com.java.asteroids.Director;
 import com.java.asteroids.Director;
 import com.java.asteroids.scene.GameScene;
-import com.java.asteroids.util.Group;
-import com.java.asteroids.util.Movement;
+import com.java.asteroids.util.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -12,16 +11,16 @@ import javafx.scene.input.KeyCode;
 import java.util.List;
 
 public class AirCraft extends Role {
-    int aimDir = 0;
-    double rotationSpeed = 30;
-    double acceleration = 0.05;
+    private int aimDir = 0;
+    private double rotationSpeed = 30;
+    private double acceleration = 0.05;
     private double speedX=0;
     private double speedY=0;
-    double maxSpeed = 3;
+    private double maxSpeed = 3;
 
     private double hyperspaceProbability = 0.01; // Probability of hyperspace jump (0 to 1)
     private boolean hyperspace = false; //
-    boolean keyUp, keyDown, keyLeft, keyRight;
+    private boolean keyUp,keyLeft, keyRight;
 
     public double getSpeedY() {
         return speedY;
@@ -29,6 +28,11 @@ public class AirCraft extends Role {
 
     public double getSpeedX() {
         return speedX;
+    }
+
+    @Override
+    public double getSpeed() {
+        return Math.sqrt(speedX*speedX+speedY*speedY);
     }
 
     public AirCraft(double x, double y, Group group, Movement mov, int aimDir, GameScene gameScene) {
@@ -42,9 +46,6 @@ public class AirCraft extends Role {
             //for movement
             case UP:
                 keyUp = true;
-                break;
-            case DOWN:
-                keyDown = true;
                 break;
             case LEFT:
                 keyLeft = true;
@@ -68,9 +69,6 @@ public class AirCraft extends Role {
             case UP:
                 keyUp = false;
                 break;
-            case DOWN:
-                keyDown = false;
-                break;
             case LEFT:
                 keyLeft = false;
                 break;
@@ -81,15 +79,13 @@ public class AirCraft extends Role {
         movChange();
         aimChange();
     }
-
     public void movChange() {
-        if (keyUp && !keyDown) {
-            mov = Movement.TRUST;
-        } else if (!keyUp && !keyDown) {
-            mov = Movement.FLOAT;
+        if (keyUp) {
+            setMov(Movement.TRUST);
+        } else if (!keyUp ) {
+            setMov(Movement.FLOAT);
         }
     }
-
     public void aimChange() {
         if (keyLeft) {
             aimDir -= rotationSpeed;
@@ -97,22 +93,20 @@ public class AirCraft extends Role {
             aimDir += rotationSpeed;
         }
     }
-
     @Override
     public void paint(GraphicsContext graphicsContext) {
         graphicsContext.save();
         graphicsContext.translate(x, y);
         graphicsContext.rotate(aimDir);
 
-        if (mov == Movement.TRUST) {
+        if (getMov() == Movement.TRUST) {
             graphicsContext.drawImage(new Image("image/aircraft_fire_new.png"), -width / 2, -height / 2, width, height);
         }
 
-        graphicsContext.drawImage(image, -width / 2, -height / 2, width, height); // Draw the aircraft
+        graphicsContext.drawImage(getImage(), -width / 2, -height / 2, width, height); // Draw the aircraft
         move();
         graphicsContext.restore();
     }
-
 
     @Override
     public void move() {
@@ -130,7 +124,7 @@ public class AirCraft extends Role {
         }
 
         // Increase the speed with acceleration
-        if (mov == Movement.TRUST ) {
+        if (getMov() == Movement.TRUST ) {
                 speedX += acceleration * Math.sin(Math.toRadians(aimDir % 360));
                 speedY -= acceleration * Math.cos(Math.toRadians(aimDir % 360));
                 if (speedX>maxSpeed) speedX=maxSpeed;
@@ -139,10 +133,8 @@ public class AirCraft extends Role {
                 if (speedY<-maxSpeed) speedY=-maxSpeed;
 
             }
-
         x += speedX;
         y += speedY;
-
         // Implement hyperspace feature
 //        if (hyperspace && Math.random() < hyperspaceProbability) {
 //            x = Math.random() * Director.WIDTH; // Teleport to a random x-coordinate
@@ -151,14 +143,11 @@ public class AirCraft extends Role {
 //            hyperspace = false; // Reset hyperspace flag
 //        }
     }
-
-
     public void fire() {
 //        System.out.println(speed+ " Speed of Fire");
-        Bullet bullet = new Bullet(x, y, 5, getGroup(), aimDir, gameScene);
+        Bullet bullet = new Bullet(x, y, 10+getSpeed(), getGroup(), aimDir, gameScene);
+        SoundEffect.play("/sound/attack.mp3");
         gameScene.getBullets().add(bullet);
 
     }
-
-
 }

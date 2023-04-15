@@ -2,8 +2,7 @@ package com.java.asteroids.sprite;
 
 import com.java.asteroids.sprite.Bullet;
 import com.java.asteroids.scene.GameScene;
-import com.java.asteroids.util.Group;
-import com.java.asteroids.util.Movement;
+import com.java.asteroids.util.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Alien extends Role {
-    int aimDir = 0;
+    private int aimDir = 0;
     private long lastShotTime = 0;
     private Random random;
     private double minX;
@@ -87,12 +86,6 @@ public class Alien extends Role {
 
     // Shoot a bullet
     public void fire() {
-//        long currentTime = System.currentTimeMillis();
-//        if (currentTime - lastShotTime < 1000) { // only shoot once per half second
-//            return; //the method simply returns without shooting
-//        }
-//        //Otherwise, the method creates a new bullet and adds it to the game scene, and updates the lastShotTime variable.
-//        lastShotTime = currentTime;
         int i = random.nextInt(200);
         if (i == 1) {
             // create a new bullet and add it to the game scene
@@ -122,6 +115,7 @@ public class Alien extends Role {
 
         if (airCraft != null && this.getContour().intersects(airCraft.getContour())) {
             airCraft.setAlive(false);
+            SoundEffect.play("/sound/explosion.wav");
             gameScene.getExplores().add(new Explore(x,y,gameScene));
             this.setAlive(false);
             gameScene.checkGameOver();

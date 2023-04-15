@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import java.util.List;
 
 public class Bullet extends Role {
-    int aimDir;
+    private int aimDir;
 
     public Bullet(double x, double y, double speed, Group group, int aimDir, GameScene gameScene) {
         super(getBulletImage(group), x, y, 10, 10, group, Movement.FORWARD, gameScene);
@@ -41,6 +41,7 @@ public class Bullet extends Role {
         if (asteroid != null && !asteroid.getGroup().equals(this.getGroup()) && this.getContour().intersects(asteroid.getContour())) {
             asteroid.setAlive(false);
             this.setAlive(false);
+            SoundEffect.play("/sound/explosion.wav");
             AsteroidSize size = asteroid.getSize();
 
             //get score depend on size
@@ -68,9 +69,11 @@ public class Bullet extends Role {
         if (alien != null && !alien.getGroup().equals(this.getGroup()) && this.getContour().intersects(alien.getContour())) {
             alien.setAlive(false);
             this.setAlive(false);
+            SoundEffect.play("/sound/explosion.wav");
             gameScene.setScore(gameScene.getScore() + 200);
         }
     }
+
     // Check for collisions between the bullet and a list of aliens
     public void impactAliens(List<Alien> aliens) {
         for (int i = 0; i < aliens.size(); i++) {
@@ -78,10 +81,11 @@ public class Bullet extends Role {
         }
     }
 
-    public void impactPlayer(AirCraft player){
+    public void impactPlayer(AirCraft player) {
         if (player != null && !player.getGroup().equals(this.getGroup()) && this.getContour().intersects(player.getContour())) {
             player.setAlive(false);
             this.setAlive(false);
+            SoundEffect.play("/sound/explosion.wav");
             gameScene.checkGameOver();
         }
 
@@ -91,7 +95,7 @@ public class Bullet extends Role {
     public void paint(GraphicsContext graphicsContext) {
         if (!isAlive()) {
             gameScene.getBullets().remove(this);
-            gameScene.getExplores().add(new Explore(x,y,gameScene));
+            gameScene.getExplores().add(new Explore(x, y, gameScene));
             return;
         }
         super.paint(graphicsContext);

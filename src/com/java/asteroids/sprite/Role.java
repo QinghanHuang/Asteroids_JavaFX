@@ -8,8 +8,16 @@ import javafx.scene.image.Image;
 public abstract class Role extends Sprite{
     private boolean alive=true;
     private Group group;
-    Movement mov;
-    double speed;
+    private Movement mov;
+     double speed;
+
+    public Movement getMov() {
+        return mov;
+    }
+
+    public void setMov(Movement mov) {
+        this.mov = mov;
+    }
 
     public Role(Image image, double x, double y, double width, double height, Group group, Movement mov, GameScene gameScene) {
         super(image, x, y, width, height, gameScene);

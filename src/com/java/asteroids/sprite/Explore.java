@@ -31,10 +31,10 @@ public class Explore extends Sprite{
             gameScene.getExplores().remove(this);
             return;
         }
-        image=images[count];
-        double ex=x-image.getWidth()/2;
-        double ey=y-image.getHeight()/2;
-        graphicsContext.drawImage(image,ex,ey);
+        setImage(images[count]);
+        double ex=x-getImage().getWidth()/2;
+        double ey=y-getImage().getHeight()/2;
+        graphicsContext.drawImage(getImage(),ex,ey);
         count++;
 
     }
