@@ -1,12 +1,15 @@
 package com.java.asteroids.sprite;
 
 import com.java.asteroids.Director;
+import com.java.asteroids.Director;
 import com.java.asteroids.scene.GameScene;
 import com.java.asteroids.util.Group;
 import com.java.asteroids.util.Movement;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+
+import java.util.List;
 
 public class AirCraft extends Role {
     int aimDir = 0;
@@ -18,9 +21,10 @@ public class AirCraft extends Role {
     private double hyperspaceProbability = 0.01; // Probability of hyperspace jump (0 to 1)
     private boolean hyperspace = false; //
     boolean keyUp, keyDown, keyLeft, keyRight;
+    double oldX,oldY;
 
     public AirCraft(double x, double y, Group group, Movement mov, int aimDir, GameScene gameScene) {
-        super(new Image("image/aircraft.png"), x, y, 40, 60, group, mov, gameScene);
+        super(new Image("image/aircraft_new.png"), x, y, 50, 100, group, mov, gameScene);
         this.aimDir = aimDir;
         speed = 5;
     }
@@ -42,6 +46,9 @@ public class AirCraft extends Role {
                 keyRight = true;
                 break;
             //for fire
+            case SPACE:
+                fire();
+                break;
 
         }
         movChange();
@@ -53,7 +60,7 @@ public class AirCraft extends Role {
         switch (keyCode) {
 //            for fire
             case SPACE:
-                fire();
+//                fire();
                 break;
             case UP:
                 keyUp = false;
@@ -100,12 +107,17 @@ public class AirCraft extends Role {
         graphicsContext.rotate(aimDir);
 
         // Draw the fire image behind the aircraft when the thrusters are applied
+//        if (mov == Movement.FORWARD) {
+//            Image fireImage = new Image("image/trust_fire.png");
+//            double fireX = -width / 2; // Position the fire image centered horizontally behind the aircraft
+//            double fireY = -height / 2 - 15; // Position the fire image above the bottom of the aircraft
+//            graphicsContext.drawImage(fireImage, fireX, fireY, width, height); // Draw the fire image with the same size as the aircraft
+//        }
+
         if (mov == Movement.FORWARD) {
-            Image fireImage = new Image("image/trust_fire.png");
-            double fireX = -width / 2; // Position the fire image centered horizontally behind the aircraft
-            double fireY = -height / 2 - 15; // Position the fire image above the bottom of the aircraft
-            graphicsContext.drawImage(fireImage, fireX, fireY, width, height); // Draw the fire image with the same size as the aircraft
+            graphicsContext.drawImage(new Image("image/aircraft_fire_new.png"), -width / 2, -height / 2, width, height);
         }
+
 
         graphicsContext.drawImage(image, -width / 2, -height / 2, width, height); // Draw the aircraft
         move();
@@ -118,6 +130,8 @@ public class AirCraft extends Role {
 
     @Override
     public void move() {
+        oldX = x;oldY=y;
+
         double dx = speed * Math.sin(Math.toRadians(aimDir % 360));
         double dy = -speed * Math.cos(Math.toRadians(aimDir % 360));
 
@@ -175,7 +189,23 @@ public class AirCraft extends Role {
         }
     }
 
+    public boolean impact(Sprite sprite) {
+        if (sprite != null && !sprite.equals(this)&& this.getContour().intersects(sprite.getContour())) {
+            x=oldX;
+            y=oldY;
+            return true;
+        }
+        return false;
+    }
+
+    public void impact(List<? extends Sprite> sprites) {
+        for(Sprite sprite:sprites){
+            this.impact(sprite);
+        }
+    }
+
     public void fire() {
+        System.out.println(speed+ " Speed of Fire");
         Bullet bullet = new Bullet(x, y, speed+10,getGroup(), aimDir, gameScene);
         gameScene.getBullets().add(bullet);
 

@@ -12,7 +12,7 @@ import java.util.*;
 public class Director {
 
     //set global WIDTH and HEIGHT
-    public static final double WIDTH = 1440, HEIGHT = 960;
+    public static final double WIDTH = 1440, HEIGHT = 760;
 
     //store stage
     private Stage stage;
@@ -56,7 +56,7 @@ public class Director {
         stage.setHeight(HEIGHT);
 
         //load Scores From File
-        loadScoresFromFile();
+//        loadScoresFromFile();
         //set stage
         this.stage=stage;
         toIndex();

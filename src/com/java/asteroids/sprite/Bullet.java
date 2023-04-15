@@ -7,6 +7,8 @@ import com.java.asteroids.util.Movement;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.List;
+
 public class Bullet  extends Role{
     int aimDir;
     public Bullet( double x, double y,double speed, Group group, int aimDir, GameScene gameScene) {
@@ -35,8 +37,44 @@ public class Bullet  extends Role{
 
     }
 
+    public boolean impactAsteroid(Asteroid asteroid) {
+        if (asteroid != null && !asteroid.getGroup().equals(this.getGroup()) && this.getContour().intersects(asteroid.getContour())) {
+            asteroid.setAlive(false);
+            this.setAlive(false);
+            return true;
+        }
+        return false;
+    }
+
+    
+    public void impactAsteroid(List<Asteroid> asteroids) {
+        for(Asteroid asteroid:asteroids){
+            this.impactAsteroid(asteroid);
+        }
+    }
+
+    public boolean impactAlien(Alien alien) {
+        if (alien != null && !alien.getGroup().equals(this.getGroup()) && this.getContour().intersects(alien.getContour())) {
+            alien.setAlive(false);
+            this.setAlive(false);
+            return true;
+        }
+        return false;
+    }
+
+    // Check for collisions between the bullet and a list of aliens
+    public void impactAlien(List<Alien> aliens) {
+        for (Alien alien : aliens) {
+            this.impactAlien(alien);
+        }
+    }
+    
     @Override
     public void paint(GraphicsContext graphicsContext) {
+        if (!isAlive()) {
+            gameScene.getBullets().remove(this);
+            return;
+        }
         super.paint(graphicsContext);
         move();
     }
