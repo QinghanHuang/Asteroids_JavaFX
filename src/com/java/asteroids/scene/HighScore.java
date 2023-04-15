@@ -24,8 +24,6 @@ public class HighScore {
             Parent root= fxmlLoader.load();
             ScoreController scoreController=fxmlLoader.getController();
 
-            //get scores list(for test)
-//            System.out.println(Director.getInstance().getScores());
 
             //pass this list to setScoreList
             scoreController.setScoreList(Director.getInstance().getScores());

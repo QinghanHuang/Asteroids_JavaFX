@@ -13,19 +13,24 @@
             <Image url="@../image/index_bg.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="play" alignment="CENTER" layoutX="572.0" layoutY="492.0" onMouseClicked="#playClick" onMouseEntered="#playEnter" onMouseExited="#playExit" prefHeight="89.0" prefWidth="281.0" text="PLAY GAME" textAlignment="CENTER" textFill="#f8f5f5">
+      <Label fx:id="play" alignment="CENTER" layoutX="459.0" layoutY="488.0" onMouseClicked="#playClick" onMouseEntered="#playEnter" onMouseExited="#playExit" prefHeight="89.0" prefWidth="500.0" text="PLAY GAME" textAlignment="CENTER" textFill="#f8f5f5">
          <font>
-            <Font size="51.0" />
+            <Font name="BM DoHyeon OTF" size="43.0" />
          </font>
       </Label>
-      <Label fx:id="score" alignment="CENTER" layoutX="544.0" layoutY="612.0" onMouseClicked="#scoreClick" onMouseEntered="#scoreEnter" onMouseExited="#scoreExit" prefHeight="80.0" prefWidth="345.0" text="HIGH SCORES" textAlignment="CENTER" textFill="#f8f5f5">
+      <Label fx:id="score" alignment="CENTER" layoutX="436.0" layoutY="593.0" onMouseClicked="#scoreClick" onMouseEntered="#scoreEnter" onMouseExited="#scoreExit" prefHeight="86.0" prefWidth="558.0" text="HIGH SCORES" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font size="51.0" />
+            <Font name="BM DoHyeon OTF" size="43.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="422.0" layoutY="117.0" prefHeight="89.0" prefWidth="611.0" text="ASTEROIDS" textAlignment="CENTER" textFill="#f8f5f5">
+      <Label alignment="CENTER" layoutX="3.0" layoutY="44.0" prefHeight="239.0" prefWidth="1445.0" text="ASTEROIDS" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="96.0" />
+            <Font name="BM DoHyeon OTF" size="96.0" />
+         </font>
+      </Label>
+      <Label fx:id="control" alignment="CENTER" layoutX="513.0" layoutY="688.0" onMouseClicked="#control" prefHeight="86.0" prefWidth="391.0" text="CONTROL INFO" textFill="WHITE">
+         <font>
+            <Font name="BM DoHyeon OTF" size="43.0" />
          </font>
       </Label>
    </children>

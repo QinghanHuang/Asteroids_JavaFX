@@ -79,6 +79,10 @@ public class Director {
 
     }
 
+    public void toControl(){
+        ControlInfo.load(stage);
+    }
+
     /**
      * load gameScene
      */

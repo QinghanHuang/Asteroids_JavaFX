@@ -58,7 +58,6 @@ public class Bullet extends Role {
         }
     }
 
-
     public void impactAsteroids(List<Asteroid> asteroids) {
         for (int i = 0; i < asteroids.size(); i++) {
             this.impactAsteroid(asteroids.get(i));
@@ -72,12 +71,20 @@ public class Bullet extends Role {
             gameScene.setScore(gameScene.getScore() + 200);
         }
     }
-
     // Check for collisions between the bullet and a list of aliens
     public void impactAliens(List<Alien> aliens) {
         for (int i = 0; i < aliens.size(); i++) {
             this.impactAlien(aliens.get(i));
         }
+    }
+
+    public void impactPlayer(AirCraft player){
+        if (player != null && !player.getGroup().equals(this.getGroup()) && this.getContour().intersects(player.getContour())) {
+            player.setAlive(false);
+            this.setAlive(false);
+            gameScene.checkGameOver();
+        }
+
     }
 
     @Override

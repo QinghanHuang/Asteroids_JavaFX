@@ -83,36 +83,29 @@ public class Asteroid extends Role{
         if (y > Director.HEIGHT ) y = 0;
         }
 
-    public boolean impactAirCraft(AirCraft airCraft) {
-
+    public void impactAirCraft(AirCraft airCraft) {
         if (airCraft != null  && this.getContour().intersects(airCraft.getContour())) {
             airCraft.setAlive(false);
-
             gameScene.getExplores().add(new Explore(x,y,gameScene));
             this.setAlive(false);
             gameScene.checkGameOver();
-            return true;
-        }
-        return false;
-    }
-
-
-    public boolean impactAlien(Alien alien) {
-
-        if (alien != null  && this.getContour().intersects(alien.getContour())) {
-            System.out.println("Killed");
-            alien.setAlive(false);
-            this.setAlive(false);
-            return true;
-        }
-        return false;
-    }
-
-    public void impactAlien(List<Alien> aliens) {
-        for(Alien alien : aliens){
-            this.impactAlien(alien);
         }
     }
+
+
+//    public void impactAlien(Alien alien) {
+//        if (alien != null  && this.getContour().intersects(alien.getContour())) {
+//            System.out.println("Killed");
+//            alien.setAlive(false);
+//            this.setAlive(false);
+//        }
+//    }
+
+//    public void impactAlien(List<Alien> aliens) {
+//        for(Alien alien : aliens){
+//            this.impactAlien(alien);
+//        }
+//    }
 
     @Override
     public void paint(GraphicsContext graphicsContext) {

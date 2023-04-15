@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.java.asteroids.controller.ControlInfoController">
+   <children>
+      <ImageView fitHeight="960.0" fitWidth="1440.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/game_bg.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="109.0" fitWidth="166.0" layoutX="266.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/keyboard.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="112.0" fitWidth="105.0" layoutX="920.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/enemy.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="82.0" fitWidth="82.0" layoutX="177.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/up.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="130.0" fitWidth="146.0" layoutX="147.0" layoutY="444.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/space.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="82.0" fitWidth="82.0" layoutX="131.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/left.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="82.0" fitWidth="82.0" layoutX="217.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/right.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="82.0" fitWidth="82.0" layoutX="163.0" layoutY="699.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/p.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="82.0" fitWidth="82.0" layoutX="165.0" layoutY="584.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/shift.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="98.0" fitWidth="123.0" layoutX="760.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/alien.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="119.0" fitWidth="130.0" layoutX="746.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/asteroid_big.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="92.0" fitWidth="103.0" layoutX="758.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/asteroid_big.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="47.0" fitWidth="62.0" layoutX="784.0" layoutY="616.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/asteroid_big.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="927.0" layoutY="206.0" prefHeight="79.0" prefWidth="372.0" text="=      200 P" textFill="WHITE">
+         <font>
+            <Font name="BM DoHyeon OTF" size="48.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="918.0" layoutY="589.0" prefHeight="79.0" prefWidth="372.0" text="=      100 P" textFill="WHITE">
+         <font>
+            <Font name="BM DoHyeon OTF" size="48.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="918.0" layoutY="485.0" prefHeight="79.0" prefWidth="372.0" text="=       50 P" textFill="WHITE">
+         <font>
+            <Font name="BM DoHyeon OTF" size="48.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="921.0" layoutY="353.0" prefHeight="79.0" prefWidth="372.0" text="=       20 P" textFill="WHITE">
+         <font>
+            <Font name="BM DoHyeon OTF" size="48.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="683.0" layoutY="693.0" prefHeight="79.0" prefWidth="372.0" text="10000 P    = " textFill="WHITE">
+         <font>
+            <Font name="BM DoHyeon OTF" size="48.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="98.0" fitWidth="62.0" layoutX="1133.0" layoutY="690.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/aircraft_new.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="310.0" layoutY="217.0" prefHeight="79.0" prefWidth="372.0" text="THRUST" textFill="WHITE">
+         <font>
+            <Font name="BM DoHyeon OTF" size="39.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="310.0" layoutY="343.0" prefHeight="79.0" prefWidth="372.0" text="ROTATE" textFill="WHITE">
+         <font>
+            <Font name="BM DoHyeon OTF" size="39.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="306.0" layoutY="460.0" prefHeight="79.0" prefWidth="372.0" text="FIRE" textFill="WHITE">
+         <font>
+            <Font name="BM DoHyeon OTF" size="39.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="321.0" layoutY="587.0" prefHeight="79.0" prefWidth="372.0" text="HYPERSPACE" textFill="WHITE">
+         <font>
+            <Font name="BM DoHyeon OTF" size="39.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="301.0" layoutY="693.0" prefHeight="79.0" prefWidth="372.0" text="PAUSE" textFill="WHITE">
+         <font>
+            <Font name="BM DoHyeon OTF" size="39.0" />
+         </font>
+      </Label>
+      <Label fx:id="back" alignment="CENTER" layoutX="462.0" layoutY="825.0" onMouseClicked="#backClick" prefHeight="79.0" prefWidth="414.0" text="BACK TO INDEX" textFill="WHITE">
+         <font>
+            <Font name="BM DoHyeon OTF" size="48.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

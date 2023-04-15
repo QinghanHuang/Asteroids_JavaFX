@@ -14,6 +14,14 @@ public class IndexController {
     private Label score;
 
     @FXML
+    private Label control;
+
+    @FXML
+    void control(MouseEvent event) {
+        Director.getInstance().toControl();
+    }
+
+    @FXML
     void playEnter(MouseEvent event) {
 
     }

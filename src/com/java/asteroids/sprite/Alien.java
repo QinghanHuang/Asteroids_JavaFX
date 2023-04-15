@@ -1,4 +1,5 @@
 package com.java.asteroids.sprite;
+
 import com.java.asteroids.sprite.Bullet;
 import com.java.asteroids.scene.GameScene;
 import com.java.asteroids.util.Group;
@@ -92,49 +93,40 @@ public class Alien extends Role {
 //        }
 //        //Otherwise, the method creates a new bullet and adds it to the game scene, and updates the lastShotTime variable.
 //        lastShotTime = currentTime;
-        int i = random.nextInt(300);
-        if (i==1){
+        int i = random.nextInt(200);
+        if (i == 1) {
             // create a new bullet and add it to the game scene
-            Bullet bullet = new Bullet(x, y, 5,getGroup(), aimDir, gameScene);
+            Bullet bullet = new Bullet(x, y, 5, getGroup(), aimDir, gameScene);
             gameScene.getBullets().add(bullet);
         }
 
     }
 
-    
-public boolean impactAsteroid(Asteroid asteroid) {
-    if (asteroid != null && !asteroid.getGroup().equals(this.getGroup()) && this.getContour().intersects(asteroid.getContour())) {
-        asteroid.setAlive(false);
-        this.setAlive(false);
-        return true;
+
+    public boolean impactAsteroid(Asteroid asteroid) {
+        if (asteroid != null && !asteroid.getGroup().equals(this.getGroup()) && this.getContour().intersects(asteroid.getContour())) {
+            asteroid.setAlive(false);
+            this.setAlive(false);
+            return true;
+        }
+        return false;
     }
-    return false;
-}
 
-public void impactAsteroid(List<Asteroid> asteroids) {
-    for(Asteroid asteroid:asteroids){
-        this.impactAsteroid(asteroid);
+    public void impactAsteroid(List<Asteroid> asteroids) {
+        for (Asteroid asteroid : asteroids) {
+            this.impactAsteroid(asteroid);
+        }
     }
-}
 
-public boolean impactAirCraft(AirCraft airCraft) {
+    public void impactAirCraft(AirCraft airCraft) {
 
-    if (airCraft != null  && this.getContour().intersects(airCraft.getContour())) {
-        System.out.println("Killed");
-        airCraft.setAlive(false);
-        this.setAlive(false);
-        return true;
+        if (airCraft != null && this.getContour().intersects(airCraft.getContour())) {
+            airCraft.setAlive(false);
+            gameScene.getExplores().add(new Explore(x,y,gameScene));
+            this.setAlive(false);
+            gameScene.checkGameOver();
+        }
     }
-    return false;
-}
-
-public void impactAirCraft(List<AirCraft> airCrafts) {
-    for(AirCraft airCraft:airCrafts){
-        this.impactAirCraft(airCraft);
-    }
-}
-
-
 }
 
 

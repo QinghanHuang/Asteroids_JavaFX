@@ -15,30 +15,38 @@
             <Image url="@../image/index_bg.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="enterName" layoutX="579.0" layoutY="724.0" prefHeight="78.0" prefWidth="310.0" promptText="Enter Your Name">
+      <TextField fx:id="enterName" layoutX="918.0" layoutY="418.0" prefHeight="130.0" prefWidth="334.0" promptText="Enter Your Name">
          <font>
             <Font size="26.0" />
          </font>
       </TextField>
-      <Button fx:id="submit" layoutX="667.0" layoutY="822.0" mnemonicParsing="false" onMouseClicked="#submitClick" prefHeight="60.0" prefWidth="131.0" text="SUBMIT" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="629.0" prefHeight="90.0" prefWidth="269.0" text="Name" textFill="#f8f3f3">
+      <Button fx:id="submit" layoutX="979.0" layoutY="611.0" mnemonicParsing="false" onMouseClicked="#submitClick" prefHeight="60.0" prefWidth="202.0" scaleShape="false" text="SUBMIT">
          <font>
-            <Font name="System Bold" size="73.0" />
+            <Font name="BM DoHyeon OTF" size="24.0" />
+         </font></Button>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="831.0" layoutY="200.0" prefHeight="18.0" prefWidth="546.0" text="Please input " textFill="#f8f3f3">
+         <font>
+            <Font name="BM DoHyeon OTF" size="60.0" />
          </font>
       </Label>
-      <Label layoutX="540.0" layoutY="414.0" prefHeight="77.0" prefWidth="407.0" text="Your Score" textFill="#fcf8f8">
+      <Label layoutX="126.0" layoutY="412.0" prefHeight="136.0" prefWidth="454.0" text="Your Score：" textFill="#fcf8f8">
          <font>
-            <Font name="System Bold" size="82.0" />
+            <Font name="BM DoHyeon OTF" size="67.0" />
          </font>
       </Label>
-      <Label fx:id="showScore" alignment="CENTER" layoutX="608.0" layoutY="546.0" prefHeight="74.0" prefWidth="222.0" text="score" textFill="#f5f0f0">
+      <Label fx:id="showScore" alignment="CENTER" layoutX="110.0" layoutY="547.0" prefHeight="153.0" prefWidth="397.0" text="score" textFill="#f5f0f0">
          <font>
-            <Font size="55.0" />
+            <Font name="BM DoHyeon OTF" size="93.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="300.0" layoutY="123.0" prefHeight="150.0" prefWidth="877.0" text="GAME OVER" textFill="#f8f6f6">
+      <Label alignment="CENTER" layoutX="34.0" layoutY="214.0" prefHeight="160.0" prefWidth="591.0" text="GAME OVER" textFill="#f8f6f6">
          <font>
-            <Font name="System Bold" size="96.0" />
+            <Font name="BM DoHyeon OTF" size="96.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="832.0" layoutY="273.0" prefHeight="0.0" prefWidth="546.0" text="your name：" textFill="#f8f3f3">
+         <font>
+            <Font name="BM DoHyeon OTF" size="60.0" />
          </font>
       </Label>
    </children>

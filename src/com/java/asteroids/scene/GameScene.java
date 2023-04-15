@@ -125,18 +125,17 @@ public class GameScene {
             bullet.paint(graphicsContext);
             bullet.impactAsteroids(asteroids);
             bullet.impactAliens(aliens);
+            bullet.impactPlayer(self);
+
         }
         //paint aliens in gameScene
         for (int i = 0; i < aliens.size(); i++) {
             Alien alien = aliens.get(i);
+            alien.impactAirCraft(self);
             alien.paint(graphicsContext);
             alien.fire();
         }
 
-        //paint bullets list
-        for (int i = 0; i < bullets.size(); i++) {
-            bullets.get(i).paint(graphicsContext);
-        }
 
         //paint explores list
         for (int i = 0; i <explores.size() ; i++) {
@@ -155,6 +154,11 @@ public class GameScene {
         graphicsContext.fillText("starts: " + asteroids.size(), 20, 90);
         graphicsContext.fillText("bullets: " + bullets.size(), 20, 120);
         graphicsContext.fillText("lives: " + lives, 20, 150);
+        if(self!=null){
+            graphicsContext.fillText("speedX: " + self.getSpeedX(), 20, 180);
+            graphicsContext.fillText("speedY: " + self.getSpeedY(), 20, 210);
+
+        }
     }
 
     public void init(Stage stage) {
@@ -180,7 +184,7 @@ public class GameScene {
     }
 
     public void initPlayer(){
-        self = new AirCraft(700, 450, Group.PLAYER, Movement.STOP, 0, this);
+        self = new AirCraft(700, 450, Group.PLAYER, Movement.FLOAT, 0, this);
     }
 
     // initial enemies

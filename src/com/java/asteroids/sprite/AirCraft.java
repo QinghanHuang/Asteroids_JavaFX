@@ -14,21 +14,28 @@ import java.util.List;
 public class AirCraft extends Role {
     int aimDir = 0;
     double rotationSpeed = 30;
-    double acceleration = 5;
-    double deceleration = 0.01;
-    double maxSpeed = 5;
+    double acceleration = 0.05;
+    private double speedX=0;
+    private double speedY=0;
+    double maxSpeed = 3;
 
     private double hyperspaceProbability = 0.01; // Probability of hyperspace jump (0 to 1)
     private boolean hyperspace = false; //
     boolean keyUp, keyDown, keyLeft, keyRight;
-    double oldX,oldY;
 
-    public AirCraft(double x, double y, Group group, Movement mov, int aimDir, GameScene gameScene) {
-        super(new Image("image/aircraft_new.png"), x, y, 50, 100, group, mov, gameScene);
-        this.aimDir = aimDir;
-        speed = 5;
+    public double getSpeedY() {
+        return speedY;
     }
 
+    public double getSpeedX() {
+        return speedX;
+    }
+
+    public AirCraft(double x, double y, Group group, Movement mov, int aimDir, GameScene gameScene) {
+        super(new Image("image/aircraft_new.png"), x, y, 40, 60, group, mov, gameScene);
+        this.aimDir = aimDir;
+        speed = 0;
+    }
 
     public void pressed(KeyCode keyCode) {
         switch (keyCode) {
@@ -57,6 +64,7 @@ public class AirCraft extends Role {
             case SPACE:
                 fire();
                 break;
+            //for movement
             case UP:
                 keyUp = false;
                 break;
@@ -76,14 +84,9 @@ public class AirCraft extends Role {
 
     public void movChange() {
         if (keyUp && !keyDown) {
-            mov = Movement.FORWARD;
-            acceleration = 0.2; // Increase acceleration value
-        } else if (!keyUp && keyDown) {
-            mov = Movement.BACKWARD;
-            acceleration = 0.1; // Decrease acceleration value
+            mov = Movement.TRUST;
         } else if (!keyUp && !keyDown) {
-            mov = Movement.STOP;
-            acceleration = 0.15; // Reset acceleration value
+            mov = Movement.FLOAT;
         }
     }
 
@@ -101,7 +104,7 @@ public class AirCraft extends Role {
         graphicsContext.translate(x, y);
         graphicsContext.rotate(aimDir);
 
-        if (mov == Movement.FORWARD) {
+        if (mov == Movement.TRUST) {
             graphicsContext.drawImage(new Image("image/aircraft_fire_new.png"), -width / 2, -height / 2, width, height);
         }
 
@@ -111,13 +114,8 @@ public class AirCraft extends Role {
     }
 
 
-
     @Override
     public void move() {
-        oldX = x;oldY=y;
-
-        double dx = speed * Math.sin(Math.toRadians(aimDir % 360));
-        double dy = -speed * Math.cos(Math.toRadians(aimDir % 360));
 
         // Check if the aircraft has gone off the screen
         if (x < 0) {
@@ -125,7 +123,6 @@ public class AirCraft extends Role {
         } else if (x > Director.WIDTH) {
             x = 0; // Wrap around to the other side
         }
-
         if (y < 0) {
             y = Director.HEIGHT; // Wrap around to the other side
         } else if (y > Director.HEIGHT) {
@@ -133,64 +130,32 @@ public class AirCraft extends Role {
         }
 
         // Increase the speed with acceleration
-        if (mov == Movement.FORWARD && speed < maxSpeed) {
-            speed += acceleration;
-        }
+        if (mov == Movement.TRUST ) {
+                speedX += acceleration * Math.sin(Math.toRadians(aimDir % 360));
+                speedY -= acceleration * Math.cos(Math.toRadians(aimDir % 360));
+                if (speedX>maxSpeed) speedX=maxSpeed;
+                if (speedX<-maxSpeed) speedX=-maxSpeed;
+                if (speedY>maxSpeed) speedY=maxSpeed;
+                if (speedY<-maxSpeed) speedY=-maxSpeed;
+
+            }
+
+        x += speedX;
+        y += speedY;
 
         // Implement hyperspace feature
-        if (hyperspace && Math.random() < hyperspaceProbability) {
-            x = Math.random() * Director.WIDTH; // Teleport to a random x-coordinate
-            y = Math.random() * Director.HEIGHT; // Teleport to a random y-coordinate
-            speed = 0; // Reset speed to 0 after hyperspace
-            hyperspace = false; // Reset hyperspace flag
-        }
-
-        switch (mov) {
-            case FORWARD:
-                x += dx;
-                y += dy;
-//                fire(); // Call fire() method to fire projectile
-                break;
-            case BACKWARD:
-                x -= dx;
-                y -= dy;
-                break;
-            case STOP:
-                dx *= deceleration;
-                dy *= deceleration;
-                x += dx;
-                y += dy;
-
-                // Decrease the speed with deceleration
-                if (speed > 0) {
-                    speed -= deceleration;
-                } else {
-                    speed = 0;
-                }
-                break;
-            default:
-                break;
-        }
+//        if (hyperspace && Math.random() < hyperspaceProbability) {
+//            x = Math.random() * Director.WIDTH; // Teleport to a random x-coordinate
+//            y = Math.random() * Director.HEIGHT; // Teleport to a random y-coordinate
+//            speed = 0; // Reset speed to 0 after hyperspace
+//            hyperspace = false; // Reset hyperspace flag
+//        }
     }
 
-//    public boolean impact(Sprite sprite) {
-//        if (sprite != null && !sprite.equals(this)&& this.getContour().intersects(sprite.getContour())) {
-//            x=oldX;
-//            y=oldY;
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public void impact(List<? extends Sprite> sprites) {
-//        for(Sprite sprite:sprites){
-//            this.impact(sprite);
-//        }
-//    }
 
     public void fire() {
 //        System.out.println(speed+ " Speed of Fire");
-        Bullet bullet = new Bullet(x, y, 5,getGroup(), aimDir, gameScene);
+        Bullet bullet = new Bullet(x, y, 5, getGroup(), aimDir, gameScene);
         gameScene.getBullets().add(bullet);
 
     }
