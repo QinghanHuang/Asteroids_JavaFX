@@ -13,7 +13,7 @@ import com.java.asteroids.util.Score;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-//import org.junit.Test;
+import org.junit.Test;
 //import org.junit.Test;
 
 import java.io.*;
@@ -29,7 +29,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         Application.launch(args);
     }
-//    @Test
+    @Test
     public void writeInitialScoresTest(){
         ArrayList<Score> scores=new ArrayList<>();
         scores.add(new Score("Player1",95));

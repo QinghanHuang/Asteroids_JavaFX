@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -37,8 +38,9 @@ public class GameScene {
     private BackGround background = new BackGround();
 
     //store player in gameScene
-    private AirCraft self =null;
-    private Alien alien = null;
+    private AirCraft self = null;
+    // Add a list to store multiple aliens
+    private List<Alien> aliens = new ArrayList<>();
 
     private long startTime = System.currentTimeMillis();
 
@@ -64,6 +66,17 @@ public class GameScene {
 
     //to store lives
     private int lives = 3;
+    // Set a score threshold for each level increase
+    private final int SCORE_PER_LEVEL = 100;
+    // Method to update the level based on the score
+    private void updateLevel() {
+        level = score / SCORE_PER_LEVEL + 1;
+    }
+    // Call this method whenever the player's score is updated
+    public void addScore(int points) {
+        score += points;
+        updateLevel();
+    }
 
 
     public List<Bullet> getBullets() {
@@ -90,26 +103,32 @@ public class GameScene {
             Asteroid asteroid = asteroids.get(i);
             asteroid.paint(graphicsContext);
             asteroid.impactAirCraft(self);
-            asteroid.impactAlien(alien);
-            
+//            asteroid.impactAlien(alien);
+
         }
         for (int i = 0; i <bullets.size() ; i++) {
             Bullet bullet=bullets.get(i);
             bullet.paint(graphicsContext);
             bullet.impactAsteroid(asteroids);
-            bullet.impactAlien(alien);
+            bullet.impactAlien(aliens);
         }
         //paint alien
-        self.impact(alien);
+//        self.impact(alien);
         // check if the current alien is alive, if not create a new one
         checkAlien();
-        if (alien != null && alien.isAlive()) {
-            alien.paint(graphicsContext);
-            alien.fire();
+        // Paint and manage all aliens in the aliens list
+        if (aliens != null) {
+            for (Alien alien : aliens) {
+                if (alien.isAlive()) {
+                    alien.paint(graphicsContext);
+                    alien.fire();
+                }
+            }
         }
-        //create an alien then impactAirCraft
-        if (alien != null) {
-        alien.impactAirCraft(self);}
+        //paint bullets list
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).paint(graphicsContext);
+        }
         //this part show score and lives
         graphicsContext.setFont(new Font(30));
         graphicsContext.setFill(Color.WHITE);
@@ -139,7 +158,6 @@ public class GameScene {
 //
         //for initial other enemies
         initSprite();
-        checkAlien();
         refresh.start();
     }
 
@@ -148,6 +166,8 @@ public class GameScene {
         initAsteroids();
         for (int i = 0; i < 3; i++) {
             showLives.add(new ShowLives(20 + i * 25, 50));
+            aliens.clear();
+            checkAlien();
         }
     }
     private  void initAsteroids(){
@@ -212,15 +232,15 @@ public class GameScene {
 
     private void checkAlien() {
         long elapsedTime = System.currentTimeMillis() - startTime;
-        if (alien == null || !alien.isAlive()) {
-            // check elapsed time since the game started
-            if (elapsedTime >= 6000) { // 1 minute in milliseconds
+        if (aliens.size() < level) {
+            if (elapsedTime >= 3000) { // 30min
                 // create Alien with random starting position
-                alien = new Alien(0, 0, 0, this);
+                Alien alien = new Alien(0, 0, 0, this);
+                aliens.add(alien);
+                startTime = System.currentTimeMillis(); // reset the timer
             }
         }
     }
-
     public void splitAsteroid(Group group, double x, double y, int pos){
         System.out.println(group);
         if (group == Group.ASTEROID_BIG){
@@ -245,7 +265,6 @@ public class GameScene {
 
         }
     }
-
 
     /**
      * clear resource after game
@@ -272,7 +291,6 @@ public class GameScene {
         @Override
         public void handle(long l) {
             if (running) {
-
                 paint();
             }
         }

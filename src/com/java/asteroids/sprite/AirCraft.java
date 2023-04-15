@@ -14,9 +14,9 @@ import java.util.List;
 public class AirCraft extends Role {
     int aimDir = 0;
     double rotationSpeed = 30;
-    double acceleration = 10.15;
-    double deceleration = 0.05;
-    double maxSpeed = 20;
+    double acceleration = 5;
+    double deceleration = 0.01;
+    double maxSpeed = 12;
 
     private double hyperspaceProbability = 0.01; // Probability of hyperspace jump (0 to 1)
     private boolean hyperspace = false; //
@@ -49,6 +49,7 @@ public class AirCraft extends Role {
             case SPACE:
                 fire();
                 break;
+
         }
         movChange();
         aimChange();
@@ -61,7 +62,6 @@ public class AirCraft extends Role {
             case SPACE:
 //                fire();
                 break;
-
             case UP:
                 keyUp = false;
                 break;
