@@ -37,7 +37,7 @@ public class Bullet extends Role {
 
     }
 
-    public boolean impactAsteroid(Asteroid asteroid) {
+    public void impactAsteroid(Asteroid asteroid) {
         if (asteroid != null && !asteroid.getGroup().equals(this.getGroup()) && this.getContour().intersects(asteroid.getContour())) {
             asteroid.setAlive(false);
             this.setAlive(false);
@@ -55,33 +55,28 @@ public class Bullet extends Role {
                     gameScene.setScore(gameScene.getScore() + 100);
                     break;
             }
-            return true;
-        }
-        return false;
-    }
-
-
-    public void impactAsteroid(List<Asteroid> asteroids) {
-        for (Asteroid asteroid : asteroids) {
-            this.impactAsteroid(asteroid);
         }
     }
 
-    public boolean impactAlien(Alien alien) {
+
+    public void impactAsteroids(List<Asteroid> asteroids) {
+        for (int i = 0; i < asteroids.size(); i++) {
+            this.impactAsteroid(asteroids.get(i));
+        }
+    }
+
+    public void impactAlien(Alien alien) {
         if (alien != null && !alien.getGroup().equals(this.getGroup()) && this.getContour().intersects(alien.getContour())) {
             alien.setAlive(false);
             this.setAlive(false);
-
             gameScene.setScore(gameScene.getScore() + 200);
-            return true;
         }
-        return false;
     }
 
     // Check for collisions between the bullet and a list of aliens
-    public void impactAlien(List<Alien> aliens) {
-        for (Alien alien : aliens) {
-            this.impactAlien(alien);
+    public void impactAliens(List<Alien> aliens) {
+        for (int i = 0; i < aliens.size(); i++) {
+            this.impactAlien(aliens.get(i));
         }
     }
 
@@ -89,6 +84,7 @@ public class Bullet extends Role {
     public void paint(GraphicsContext graphicsContext) {
         if (!isAlive()) {
             gameScene.getBullets().remove(this);
+            gameScene.getExplores().add(new Explore(x,y,gameScene));
             return;
         }
         super.paint(graphicsContext);

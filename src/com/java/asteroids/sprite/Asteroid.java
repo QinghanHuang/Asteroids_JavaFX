@@ -86,19 +86,16 @@ public class Asteroid extends Role{
     public boolean impactAirCraft(AirCraft airCraft) {
 
         if (airCraft != null  && this.getContour().intersects(airCraft.getContour())) {
-            System.out.println("Killed");
             airCraft.setAlive(false);
+
+            gameScene.getExplores().add(new Explore(x,y,gameScene));
             this.setAlive(false);
+            gameScene.checkGameOver();
             return true;
         }
         return false;
     }
 
-    public void impactAirCraft(List<AirCraft> airCrafts) {
-        for(AirCraft airCraft:airCrafts){
-            this.impactAirCraft(airCraft);
-        }
-    }
 
     public boolean impactAlien(Alien alien) {
 

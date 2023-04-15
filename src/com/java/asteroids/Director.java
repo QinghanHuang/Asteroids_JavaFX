@@ -56,7 +56,7 @@ public class Director {
         stage.setHeight(HEIGHT);
 
         //load Scores From File
-//        loadScoresFromFile();
+        loadScoresFromFile();
         //set stage
         this.stage=stage;
         toIndex();
@@ -67,6 +67,7 @@ public class Director {
      * load index
      */
     public void toIndex() {
+        gameScene.clear(stage);
         Index.load(stage);
     }
 
@@ -90,8 +91,7 @@ public class Director {
      * @param score
      */
     public void gameOver(int score) {
-//        gameScene.clear(stage);
-
+        gameScene.clear(stage);
         GameOver.load(stage,score);
     }
 

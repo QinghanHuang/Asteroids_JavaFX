@@ -40,7 +40,6 @@ public class GameScene {
     // Add a list to store multiple aliens
     private List<Alien> aliens = new ArrayList<>();
 
-    private long startTime = System.currentTimeMillis();
 
     //store bullet list
     private List<Bullet> bullets = new ArrayList<>();
@@ -51,29 +50,21 @@ public class GameScene {
     //store asteroids
     private List<Asteroid> asteroids = new ArrayList<>();
 
+    //store asteroids
+    private List<Explore> explores=new ArrayList<>();
+
 
     //to store score
     //need to show in gameScene
-    private int score = 0;
+    private int score ;
 
     //to store level
-    private int level = 1;
-    private  int maxLevel=10;
+    private int level;
+    private final int maxLevel=10;
 
     //to store lives
-    private int lives = 3;
+    private int lives;
 
-    // Set a score threshold for each level increase
-//    private final int SCORE_PER_LEVEL = 100;
-    // Method to update the level based on the score
-//    private void updateLevel() {
-//        level = score / SCORE_PER_LEVEL + 1;
-//    }
-//    // Call this method whenever the player's score is updated
-//    public void addScore(int points) {
-//        score += points;
-//        updateLevel();
-//    }
 
     public List<Asteroid> getAsteroids() {
         return asteroids;
@@ -95,6 +86,12 @@ public class GameScene {
         this.score = score;
     }
 
+
+    public List<Explore> getExplores() {
+        return explores;
+    }
+
+
     /**
      * paint of gameScene
      * will call paint of sprite
@@ -110,8 +107,10 @@ public class GameScene {
         }
 
         //paint player in gameScene
-        self.paint(graphicsContext);
-        self.impact(asteroids);
+        if(self.isAlive()){
+            self.paint(graphicsContext);
+        }
+//        self.impact(asteroids);
 
         //paint asteroids in gameScene
         for (int i = 0; i < asteroids.size(); i++) {
@@ -124,8 +123,8 @@ public class GameScene {
         for (int i = 0; i < bullets.size(); i++) {
             Bullet bullet = bullets.get(i);
             bullet.paint(graphicsContext);
-            bullet.impactAsteroid(asteroids);
-            bullet.impactAlien(aliens);
+            bullet.impactAsteroids(asteroids);
+            bullet.impactAliens(aliens);
         }
         //paint aliens in gameScene
         for (int i = 0; i < aliens.size(); i++) {
@@ -139,6 +138,11 @@ public class GameScene {
             bullets.get(i).paint(graphicsContext);
         }
 
+        //paint explores list
+        for (int i = 0; i <explores.size() ; i++) {
+            explores.get(i).paint(graphicsContext);
+        }
+
 
         //this part show score and lives
         graphicsContext.setFont(new Font(30));
@@ -150,16 +154,8 @@ public class GameScene {
         graphicsContext.fillText("alien: " + aliens.size(), 20, 60);
         graphicsContext.fillText("starts: " + asteroids.size(), 20, 90);
         graphicsContext.fillText("bullets: " + bullets.size(), 20, 120);
-
-        //game over condition
-//        if(!self.isAlive()){
-//            Director.getInstance().gameOver(false);
-//        }else if(enemies.size()==0){
-//            Director.getInstance().gameOver(true);
-//        }
-
+        graphicsContext.fillText("lives: " + lives, 20, 150);
     }
-
 
     public void init(Stage stage) {
         AnchorPane root = new AnchorPane(canvas);
@@ -170,12 +166,21 @@ public class GameScene {
         //set running true
         running = true;
 
+        //initial level and lives
+        score=0;
+        level=1;
+        lives=3;
+
         //initial player aircraft
-        self = new AirCraft(700, 450, Group.PLAYER, Movement.STOP, 0, this);
-//
+        initPlayer();
+
         //for initial other enemies
         initSprite();
         refresh.start();
+    }
+
+    public void initPlayer(){
+        self = new AirCraft(700, 450, Group.PLAYER, Movement.STOP, 0, this);
     }
 
     // initial enemies
@@ -235,6 +240,7 @@ public class GameScene {
 
         //set MouseClick actions
         backToIndex.setOnMouseClicked(event -> {
+            running=false;
             Director.getInstance().toIndex();
         });
 
@@ -267,6 +273,15 @@ public class GameScene {
         }
     }
 
+    public void checkGameOver(){
+        if(lives==1){
+            Director.getInstance().gameOver(score);
+        }else{
+            lives--;
+            initPlayer();
+        }
+    }
+
     public void splitAsteroid(AsteroidSize size, double x, double y, int pos) {
         System.out.println(size);
         if (size == AsteroidSize.ASTEROID_BIG) {
@@ -293,13 +308,13 @@ public class GameScene {
         stage.getScene().removeEventHandler(KeyEvent.KEY_RELEASED, keyProcess);
         stage.getScene().removeEventHandler(KeyEvent.KEY_PRESSED, keyProcess);
         refresh.stop();
-//        self=null;
-//        bullets.clear();
-//        enemies.clear();
-//        explores.clear();
-//        boxes.clear();
-//        rocks.clear();
-//        trees.clear();
+        self=null;
+        aliens.clear();
+        showLives.clear();
+        asteroids.clear();
+        bullets.clear();
+        explores.clear();
+
 
 
     }

@@ -173,20 +173,20 @@ public class AirCraft extends Role {
         }
     }
 
-    public boolean impact(Sprite sprite) {
-        if (sprite != null && !sprite.equals(this)&& this.getContour().intersects(sprite.getContour())) {
-            x=oldX;
-            y=oldY;
-            return true;
-        }
-        return false;
-    }
-
-    public void impact(List<? extends Sprite> sprites) {
-        for(Sprite sprite:sprites){
-            this.impact(sprite);
-        }
-    }
+//    public boolean impact(Sprite sprite) {
+//        if (sprite != null && !sprite.equals(this)&& this.getContour().intersects(sprite.getContour())) {
+//            x=oldX;
+//            y=oldY;
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    public void impact(List<? extends Sprite> sprites) {
+//        for(Sprite sprite:sprites){
+//            this.impact(sprite);
+//        }
+//    }
 
     public void fire() {
 //        System.out.println(speed+ " Speed of Fire");
