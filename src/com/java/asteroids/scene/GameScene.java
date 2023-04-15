@@ -2,15 +2,13 @@ package com.java.asteroids.scene;
 
 import com.java.asteroids.*;
 import com.java.asteroids.sprite.*;
-import com.java.asteroids.util.Group;
-import com.java.asteroids.util.Movement;
+import com.java.asteroids.util.*;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -51,36 +49,50 @@ public class GameScene {
     private List<ShowLives> showLives = new ArrayList<>();
 
     //store asteroids
-    private List<Asteroid> asteroids=new ArrayList<>();
-    public List<Asteroid> getAsteroids() {
-        return asteroids;
-    }
-//    private List<Asteroid> asteroids=new ArrayList<>();
+    private List<Asteroid> asteroids = new ArrayList<>();
+
 
     //to store score
     //need to show in gameScene
-    private int score = 100;
+    private int score = 0;
 
     //to store level
     private int level = 1;
+    private  int maxLevel=10;
 
     //to store lives
     private int lives = 3;
-    // Set a score threshold for each level increase
-    private final int SCORE_PER_LEVEL = 100;
-    // Method to update the level based on the score
-    private void updateLevel() {
-        level = score / SCORE_PER_LEVEL + 1;
-    }
-    // Call this method whenever the player's score is updated
-    public void addScore(int points) {
-        score += points;
-        updateLevel();
-    }
 
+    // Set a score threshold for each level increase
+//    private final int SCORE_PER_LEVEL = 100;
+    // Method to update the level based on the score
+//    private void updateLevel() {
+//        level = score / SCORE_PER_LEVEL + 1;
+//    }
+//    // Call this method whenever the player's score is updated
+//    public void addScore(int points) {
+//        score += points;
+//        updateLevel();
+//    }
+
+    public List<Asteroid> getAsteroids() {
+        return asteroids;
+    }
 
     public List<Bullet> getBullets() {
         return bullets;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public List<Alien> getAliens() {
+        return aliens;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     /**
@@ -88,6 +100,7 @@ public class GameScene {
      * will call paint of sprite
      */
     private void paint() {
+        checkLevel();
         //paint background in gameScene
         background.paint(graphicsContext);
 
@@ -95,45 +108,48 @@ public class GameScene {
         for (int i = 0; i < lives; i++) {
             showLives.get(i).paint(graphicsContext);
         }
+
         //paint player in gameScene
         self.paint(graphicsContext);
         self.impact(asteroids);
-        long startTime = System.nanoTime();
-        for(int i = 0; i< asteroids.size(); i++){
+
+        //paint asteroids in gameScene
+        for (int i = 0; i < asteroids.size(); i++) {
             Asteroid asteroid = asteroids.get(i);
             asteroid.paint(graphicsContext);
             asteroid.impactAirCraft(self);
-//            asteroid.impactAlien(alien);
+            //asteroid.impactAlien(alien);
 
         }
-        for (int i = 0; i <bullets.size() ; i++) {
-            Bullet bullet=bullets.get(i);
+        for (int i = 0; i < bullets.size(); i++) {
+            Bullet bullet = bullets.get(i);
             bullet.paint(graphicsContext);
             bullet.impactAsteroid(asteroids);
             bullet.impactAlien(aliens);
         }
-        //paint alien
-//        self.impact(alien);
-        // check if the current alien is alive, if not create a new one
-        checkAlien();
-        // Paint and manage all aliens in the aliens list
-        if (aliens != null) {
-            for (Alien alien : aliens) {
-                if (alien.isAlive()) {
-                    alien.paint(graphicsContext);
-                    alien.fire();
-                }
-            }
+        //paint aliens in gameScene
+        for (int i = 0; i < aliens.size(); i++) {
+            Alien alien = aliens.get(i);
+            alien.paint(graphicsContext);
+            alien.fire();
         }
+
         //paint bullets list
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(graphicsContext);
         }
+
+
         //this part show score and lives
         graphicsContext.setFont(new Font(30));
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.fillText("Score: " + score, 20, 30);
         graphicsContext.fillText("LEVEL: " + level, 650, 30);
+
+        //
+        graphicsContext.fillText("alien: " + aliens.size(), 20, 60);
+        graphicsContext.fillText("starts: " + asteroids.size(), 20, 90);
+        graphicsContext.fillText("bullets: " + bullets.size(), 20, 120);
 
         //game over condition
 //        if(!self.isAlive()){
@@ -143,6 +159,7 @@ public class GameScene {
 //        }
 
     }
+
 
     public void init(Stage stage) {
         AnchorPane root = new AnchorPane(canvas);
@@ -162,42 +179,43 @@ public class GameScene {
     }
 
     // initial enemies
-    private void initSprite(){
+    private void initSprite() {
+        // initial asteroids
         initAsteroids();
+
+        // initial aliens
+        aliens.clear();
+        initAlien();
+
+        //initial show lives
         for (int i = 0; i < 3; i++) {
             showLives.add(new ShowLives(20 + i * 25, 50));
-            aliens.clear();
-            checkAlien();
         }
     }
-    private  void initAsteroids(){
-        System.out.println("Initialised");
-//        for (int i = 0; i < 6; i++) {
+
+
+    private void initAsteroids() {
         Random random = new Random();
-        String[] aestroid_start_position = {"Top", "Right", "Bottom", "Left"};
         int x = 0;
         int y = 0;
         int position = random.nextInt(4);
-        System.out.println(position);
 
         int aimDir = 0;
-        if (position == 0){
+        if (position == 0) {
             y = (int) Director.HEIGHT + 90;
-            x =  random.nextInt((int) Director.WIDTH);
+            x = random.nextInt((int) Director.WIDTH);
         } else if (position == 1) {
             y = random.nextInt((int) Director.HEIGHT);
-            x =  (int) Director.WIDTH + 90;
+            x = (int) Director.WIDTH + 90;
         } else if (position == 2) {
             y = -90;
-            x = random.nextInt((int) Director.WIDTH );
+            x = random.nextInt((int) Director.WIDTH);
         } else if (position == 3) {
             x = -90;
             y = random.nextInt((int) Director.HEIGHT);
         }
 
-        System.out.println(y +  "Y direction");
-        System.out.println(x + " X Direction");
-        Asteroid asteroid=new Asteroid(new Image("image/asteroid_big.png"), x, y, 120, 120, Group.ASTEROID_BIG, Movement.FORWARD, this, position);
+        Asteroid asteroid = new Asteroid(new Image("image/asteroid_big.png"), x, y, 120, 120, Group.ENEMY, Movement.FORWARD, this, position, AsteroidSize.ASTEROID_BIG);
 
         asteroids.add(asteroid);
     }
@@ -230,37 +248,37 @@ public class GameScene {
         root.getChildren().addAll(backToIndex, gameOver);
     }
 
-    private void checkAlien() {
-        long elapsedTime = System.currentTimeMillis() - startTime;
-        if (aliens.size() < level) {
-            if (elapsedTime >= 3000) { // 30min
-                // create Alien with random starting position
-                Alien alien = new Alien(0, 0, 0, this);
-                aliens.add(alien);
-                startTime = System.currentTimeMillis(); // reset the timer
-            }
+    private void initAlien() {
+        for (int i = 0; i < level; i++) {
+            Alien alien = new Alien(0, 0, 0, this);
+            aliens.add(alien);
         }
     }
-    public void splitAsteroid(Group group, double x, double y, int pos){
-        System.out.println(group);
-        if (group == Group.ASTEROID_BIG){
-            for (int i = 0; i <= 1; i++){
-                Asteroid asteroid=new Asteroid(new Image("image/asteroid_big.png"), x, y, 90, 90, Group.ASTEROID_MEDIUM, Movement.FORWARD, this, pos);
+
+    private void checkLevel(){
+        if (asteroids.size() == 0 && aliens.size() == 0) {
+            if(level<maxLevel){
+                level += 1;
+            }
+            for (int i = 0; i <= level - 1; i++) {
+                initAsteroids();
+            }
+            initAlien();
+        }
+    }
+
+    public void splitAsteroid(AsteroidSize size, double x, double y, int pos) {
+        System.out.println(size);
+        if (size == AsteroidSize.ASTEROID_BIG) {
+            for (int i = 0; i < 2; i++) {
+                Asteroid asteroid = new Asteroid(new Image("image/asteroid_big.png"), x, y, 90, 90, Group.ENEMY, Movement.FORWARD, this, pos, AsteroidSize.ASTEROID_MEDIUM);
                 this.getAsteroids().add(asteroid);
             }
 
-        }else if (group == Group.ASTEROID_MEDIUM){
-            for (int i = 0; i <= 3; i++){
-                Asteroid asteroid=new Asteroid(new Image("image/asteroid_big.png"), x, y, 60, 60, Group.ASTEROID_SMALL, Movement.FORWARD, this, pos);
+        } else if (size == AsteroidSize.ASTEROID_MEDIUM) {
+            for (int i = 0; i < 2; i++) {
+                Asteroid asteroid = new Asteroid(new Image("image/asteroid_big.png"), x, y, 60, 60, Group.ENEMY, Movement.FORWARD, this, pos, AsteroidSize.ASTEROID_SMALL);
                 this.getAsteroids().add(asteroid);
-            }
-
-        }else{
-            if (asteroids.size() == 0){
-                level+=1;
-                for(int i = 0; i <= level-1; i++){
-                    initAsteroids();
-                }
             }
 
         }

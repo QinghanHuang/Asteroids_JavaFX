@@ -2,19 +2,19 @@ package com.java.asteroids.sprite;
 
 import com.java.asteroids.Director;
 import com.java.asteroids.scene.GameScene;
-import com.java.asteroids.util.Group;
-import com.java.asteroids.util.Movement;
+import com.java.asteroids.util.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.List;
 
-public class Bullet  extends Role{
+public class Bullet extends Role {
     int aimDir;
-    public Bullet( double x, double y,double speed, Group group, int aimDir, GameScene gameScene) {
+
+    public Bullet(double x, double y, double speed, Group group, int aimDir, GameScene gameScene) {
         super(getBulletImage(group), x, y, 10, 10, group, Movement.FORWARD, gameScene);
-        this.aimDir=aimDir;
-        this.speed=speed;
+        this.aimDir = aimDir;
+        this.speed = speed;
     }
 
     private static Image getBulletImage(Group group) {
@@ -28,12 +28,12 @@ public class Bullet  extends Role{
     @Override
     public void move() {
         //remove this bullet if it goes beyond the scene
-        if (x<0||y<0||x>Director.WIDTH||y>Director.HEIGHT) {
+        if (x < 0 || y < 0 || x > Director.WIDTH || y > Director.HEIGHT) {
             gameScene.getBullets().remove(this);
         }
 
-        x+=speed*Math.sin(Math.toRadians(aimDir%360));
-        y-=speed*Math.cos(Math.toRadians(aimDir%360));
+        x += speed * Math.sin(Math.toRadians(aimDir % 360));
+        y -= speed * Math.cos(Math.toRadians(aimDir % 360));
 
     }
 
@@ -41,14 +41,28 @@ public class Bullet  extends Role{
         if (asteroid != null && !asteroid.getGroup().equals(this.getGroup()) && this.getContour().intersects(asteroid.getContour())) {
             asteroid.setAlive(false);
             this.setAlive(false);
+            AsteroidSize size = asteroid.getSize();
+
+            //get score depend on size
+            switch (size) {
+                case ASTEROID_BIG:
+                    gameScene.setScore(gameScene.getScore() + 20);
+                    break;
+                case ASTEROID_MEDIUM:
+                    gameScene.setScore(gameScene.getScore() + 50);
+                    break;
+                case ASTEROID_SMALL:
+                    gameScene.setScore(gameScene.getScore() + 100);
+                    break;
+            }
             return true;
         }
         return false;
     }
 
-    
+
     public void impactAsteroid(List<Asteroid> asteroids) {
-        for(Asteroid asteroid:asteroids){
+        for (Asteroid asteroid : asteroids) {
             this.impactAsteroid(asteroid);
         }
     }
@@ -57,6 +71,8 @@ public class Bullet  extends Role{
         if (alien != null && !alien.getGroup().equals(this.getGroup()) && this.getContour().intersects(alien.getContour())) {
             alien.setAlive(false);
             this.setAlive(false);
+
+            gameScene.setScore(gameScene.getScore() + 200);
             return true;
         }
         return false;
@@ -68,7 +84,7 @@ public class Bullet  extends Role{
             this.impactAlien(alien);
         }
     }
-    
+
     @Override
     public void paint(GraphicsContext graphicsContext) {
         if (!isAlive()) {

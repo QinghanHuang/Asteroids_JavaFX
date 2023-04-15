@@ -31,15 +31,15 @@ public class Alien extends Role {
         // generate random initial position outside the screen
         double newX;
         double newY;
-        int randSide = random.nextInt(4); // generate a random number between 0 and 3
+        int randSeed = random.nextInt(4); // generate a random number between 0 and 3
 
-        if (randSide == 0) { // top
+        if (randSeed == 0) { // top
             newX = random.nextDouble() * (maxX - minX) + minX;
             newY = minY;
-        } else if (randSide == 1) { // right
+        } else if (randSeed == 1) { // right
             newX = maxX;
             newY = random.nextDouble() * (maxY - minY) + minY;
-        } else if (randSide == 2) { // bottom
+        } else if (randSeed == 2) { // bottom
             newX = random.nextDouble() * (maxX - minX) + minX;
             newY = maxY;
         } else { // left
@@ -53,6 +53,10 @@ public class Alien extends Role {
 
     @Override
     public void paint(GraphicsContext graphicsContext) {
+        if (!isAlive()) {
+            gameScene.getAliens().remove(this);
+            return;
+        }
         super.paint(graphicsContext);
         move();
     }
@@ -82,15 +86,19 @@ public class Alien extends Role {
 
     // Shoot a bullet
     public void fire() {
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastShotTime < 500) { // only shoot once per half second
-            return; //the method simply returns without shooting
+//        long currentTime = System.currentTimeMillis();
+//        if (currentTime - lastShotTime < 1000) { // only shoot once per half second
+//            return; //the method simply returns without shooting
+//        }
+//        //Otherwise, the method creates a new bullet and adds it to the game scene, and updates the lastShotTime variable.
+//        lastShotTime = currentTime;
+        int i = random.nextInt(300);
+        if (i==1){
+            // create a new bullet and add it to the game scene
+            Bullet bullet = new Bullet(x, y, 5,getGroup(), aimDir, gameScene);
+            gameScene.getBullets().add(bullet);
         }
-        //Otherwise, the method creates a new bullet and adds it to the game scene, and updates the lastShotTime variable.
-        lastShotTime = currentTime;
-        // create a new bullet and add it to the game scene
-        Bullet bullet = new Bullet(x, y, 10,getGroup(), aimDir, gameScene);
-        gameScene.getBullets().add(bullet);
+
     }
 
     
