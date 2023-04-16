@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class Score implements Serializable,Comparable<Score>{
     public static final long serialVersionUID = 868345241411312L;
-    private String name;
+    private String name="Player";
     private int score;
 
     public int getScore() {

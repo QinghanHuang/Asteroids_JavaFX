@@ -24,7 +24,7 @@
             <Font name="BM DoHyeon OTF" size="46.0" />
          </font>
       </Label>
-      <Text fx:id="scoreList" fill="#faf7f7" layoutX="294.0" layoutY="767.0" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textOrigin="BOTTOM" wrappingWidth="1080.300351858139">
+      <Text fx:id="scoreList" fill="#faf7f7" layoutX="301.0" layoutY="790.0" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="JUSTIFY" textOrigin="BOTTOM" wrappingWidth="1043.8026885986328">
          <font>
             <Font name="BM DoHyeon OTF" size="39.0" />
          </font>

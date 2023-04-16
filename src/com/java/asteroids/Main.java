@@ -23,6 +23,7 @@ import java.util.Collections;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
+        stage.getIcons().add(new Image("image/aircraft.png"));
         Director.getInstance().init(stage);
     }
 
