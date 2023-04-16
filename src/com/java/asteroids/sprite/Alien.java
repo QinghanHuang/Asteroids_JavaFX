@@ -90,6 +90,7 @@ public class Alien extends Role {
         if (i == 1) {
             // create a new bullet and add it to the game scene
             Bullet bullet = new Bullet(x, y, 5, getGroup(), aimDir, gameScene);
+            SoundEffect.play("/sound/alien_fire.wav");
             gameScene.getBullets().add(bullet);
         }
 

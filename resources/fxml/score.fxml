@@ -14,19 +14,19 @@
             <Image url="@../image/game_bg.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" layoutX="343.0" layoutY="82.0" prefHeight="139.0" prefWidth="752.0" text="High Scores" textFill="#fcfcfc">
+      <Label alignment="CENTER" layoutX="343.0" layoutY="16.0" prefHeight="0.0" prefWidth="752.0" text="High Scores" textFill="#fcfcfc">
          <font>
-            <Font size="96.0" />
+            <Font name="BM DoHyeon OTF" size="96.0" />
          </font>
       </Label>
-      <Label fx:id="newGame" alignment="CENTER" layoutX="606.0" layoutY="786.0" onMouseClicked="#newGameClick" onMouseEntered="#newGameEnter" onMouseExited="#newGameExit" prefHeight="99.0" prefWidth="276.0" text="NEW GAME" textFill="#fcfcfc">
+      <Label fx:id="newGame" alignment="CENTER" layoutX="596.0" layoutY="763.0" onMouseClicked="#newGameClick" onMouseEntered="#newGameEnter" onMouseExited="#newGameExit" prefHeight="99.0" prefWidth="276.0" text="NEW GAME" textFill="#fcfcfc">
          <font>
-            <Font size="46.0" />
+            <Font name="BM DoHyeon OTF" size="46.0" />
          </font>
       </Label>
-      <Text fx:id="scoreList" fill="#faf7f7" layoutY="800.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" textOrigin="BOTTOM" wrappingWidth="1438.4158744812012">
+      <Text fx:id="scoreList" fill="#faf7f7" layoutX="294.0" layoutY="767.0" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textOrigin="BOTTOM" wrappingWidth="1080.300351858139">
          <font>
-            <Font size="49.0" />
+            <Font name="BM DoHyeon OTF" size="39.0" />
          </font>
       </Text>
    </children>

@@ -44,9 +44,9 @@ public class ScoreController {
      */
     public void setScoreList(ArrayList<Score> scores){
         Collections.sort(scores);
-        String scoreString="";
+        String scoreString="RANK"+"\t\t"+"NAME"+"\t\t"+"SCORE"+"\n";
         for (int i = 0; i < 8; i++) {
-            scoreString+=("Top"+(i+1)+"\t"+scores.get(i).getName()+"\t"+scores.get(i).getScore()+"\n");
+            scoreString+=((i+1)+"\t\t\t"+scores.get(i).getName()+"\t\t\t"+scores.get(i).getScore()+" P\n");
         }
         scoreList.setText(scoreString);
 
