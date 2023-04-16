@@ -97,6 +97,7 @@ public class Director {
      * @param score
      */
     public void gameOver(int score) {
+        SoundEffect.stopBGM();
         gameScene.clear(stage);
         GameOver.load(stage,score);
     }

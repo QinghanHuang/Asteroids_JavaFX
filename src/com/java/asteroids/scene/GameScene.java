@@ -281,7 +281,6 @@ public class GameScene {
 
     public void checkGameOver(){
         if(lives==1){
-            SoundEffect.stopBGM();
             Director.getInstance().gameOver(score);
         }else{
             lives--;
