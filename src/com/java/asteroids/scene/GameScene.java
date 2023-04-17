@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javafx.util.Duration;
+
 
 
 public class GameScene {
@@ -185,6 +187,8 @@ public class GameScene {
 
     public void initPlayer(){
         self = new AirCraft(700, 450, Group.PLAYER, Movement.FLOAT, 0, this);
+        // Call the blinkAndSetInvincibility method with a duration of 3 seconds and 6 blink cycles
+        self.blinkAndSetInvincibility(Duration.seconds(3), 6);
     }
 
     // initial enemies
