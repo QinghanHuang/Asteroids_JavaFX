@@ -1,14 +1,15 @@
 package com.java.asteroids.sprite;
 
 import com.java.asteroids.Director;
-import com.java.asteroids.Director;
 import com.java.asteroids.scene.GameScene;
 import com.java.asteroids.util.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
-import java.util.List;
 
 public class AirCraft extends Role {
     private int aimDir = 0;
@@ -18,10 +19,33 @@ public class AirCraft extends Role {
     private double speedY=0;
     private double maxSpeed = 3;
 
+    // Add a new property for invincibility
+    private boolean invincible;
+    // Add a new property for visibility
+    private boolean visible = true;
+
     private double hyperspaceProbability = 0.01; // Probability of hyperspace jump (0 to 1)
     private boolean hyperspace = false; //
     private boolean keyUp,keyLeft, keyRight;
 
+    public boolean isInvincible() {
+        return invincible;
+    }
+
+    // Add a setter for the invincible property
+    public void setInvincible(boolean invincible) {
+        this.invincible = invincible;
+    }
+
+    // Add a getter for the visible property
+    public boolean isVisible() {
+        return visible;
+    }
+
+    // Add a setter for the visible property
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
     public double getSpeedY() {
         return speedY;
     }
@@ -95,6 +119,9 @@ public class AirCraft extends Role {
     }
     @Override
     public void paint(GraphicsContext graphicsContext) {
+        if (!isVisible()) {
+            return;
+        }
         graphicsContext.save();
         graphicsContext.translate(x, y);
         graphicsContext.rotate(aimDir);
@@ -106,6 +133,33 @@ public class AirCraft extends Role {
         graphicsContext.drawImage(getImage(), -width / 2, -height / 2, width, height); // Draw the aircraft
         move();
         graphicsContext.restore();
+    }
+
+    public void blinkAndSetInvincibility(Duration duration, int blinkCount) {
+        // Set invincibility
+        setInvincible(true);
+
+        // Create a Timeline for blinking
+        Timeline blinkTimeline = new Timeline();
+        blinkTimeline.setCycleCount(blinkCount * 2);
+
+        // Create KeyFrames for the Timeline
+        KeyFrame blinkToggleKeyFrame = new KeyFrame(Duration.millis(100), e -> setVisible(!isVisible()));
+
+        // Add the KeyFrames to the Timeline
+        blinkTimeline.getKeyFrames().addAll(blinkToggleKeyFrame);
+
+        // Start the blinking animation
+        blinkTimeline.play();
+
+        // Set up another Timeline to disable invincibility after the specified duration
+        Timeline invincibilityTimeline = new Timeline(new KeyFrame(duration, e -> {
+            setInvincible(false);
+            setVisible(true);
+        }));
+
+        // Start the invincibility Timeline
+        invincibilityTimeline.play();
     }
 
     @Override
