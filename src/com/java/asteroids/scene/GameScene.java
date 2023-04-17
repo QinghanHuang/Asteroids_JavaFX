@@ -66,6 +66,9 @@ public class GameScene {
     //to store lives
     private int lives;
 
+    // to store extra lives from points
+    private int extraLives=0;
+
 
     public List<Asteroid> getAsteroids() {
         return asteroids;
@@ -99,6 +102,7 @@ public class GameScene {
      */
     private void paint() {
         checkLevel();
+        checkExtraLives();
         //paint background in gameScene
         background.paint(graphicsContext);
 
@@ -121,6 +125,7 @@ public class GameScene {
             //asteroid.impactAlien(alien);
 
         }
+        ////paint bullets in gameScene
         for (int i = 0; i < bullets.size(); i++) {
             Bullet bullet = bullets.get(i);
             bullet.paint(graphicsContext);
@@ -149,6 +154,9 @@ public class GameScene {
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.fillText("Score: " + score, 20, 30);
         graphicsContext.fillText("LEVEL: " + level, 650, 30);
+        if (self != null) {
+            graphicsContext.fillText("HSJ Left: " + self.getHyperLeft(), 20, 900);
+        }
 
         //
 //        graphicsContext.fillText("alien: " + aliens.size(), 20, 60);
@@ -200,7 +208,8 @@ public class GameScene {
         initAlien();
 
         //initial show lives
-        for (int i = 0; i < 3; i++) {
+        //set max lives for user is 5
+        for (int i = 0; i < 5; i++) {
             showLives.add(new ShowLives(20 + i * 25, 50));
         }
     }
@@ -281,6 +290,14 @@ public class GameScene {
             initAlien();
         }
     }
+    private void checkExtraLives() {
+        if (score >= (extraLives + 1) * 10000) {
+            extraLives++;
+            lives++;
+            System.out.println(lives);
+        }
+    }
+
 
     public void checkGameOver() {
         if (lives == 1) {
