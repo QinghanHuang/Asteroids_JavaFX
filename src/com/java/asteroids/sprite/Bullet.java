@@ -10,6 +10,8 @@ import java.util.List;
 
 public class Bullet extends Role {
     private int aimDir;
+    private static final double MAX_DISTANCE=1000;
+    private double travelDistance;
 
     public Bullet(double x, double y, double speed, Group group, int aimDir, GameScene gameScene) {
         super(getBulletImage(group), x, y, 10, 10, group, Movement.FORWARD, gameScene);
@@ -27,13 +29,27 @@ public class Bullet extends Role {
 
     @Override
     public void move() {
+
+        // Check if the aircraft has gone off the screen
+        if (x < 0) {
+            x = Director.WIDTH; // Wrap around to the other side
+        } else if (x > Director.WIDTH) {
+            x = 0; // Wrap around to the other side
+        }
+        if (y < 0) {
+            y = Director.HEIGHT; // Wrap around to the other side
+        } else if (y > Director.HEIGHT) {
+            y = 0; // Wrap around to the other side
+        }
+
         //remove this bullet if it goes beyond the scene
-        if (x < 0 || y < 0 || x > Director.WIDTH || y > Director.HEIGHT) {
+        if (travelDistance>MAX_DISTANCE) {
             gameScene.getBullets().remove(this);
         }
 
         x += speed * Math.sin(Math.toRadians(aimDir % 360));
         y -= speed * Math.cos(Math.toRadians(aimDir % 360));
+        travelDistance+=speed;
 
     }
 

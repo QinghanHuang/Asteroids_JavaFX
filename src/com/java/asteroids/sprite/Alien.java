@@ -11,7 +11,6 @@ import java.util.Random;
 
 public class Alien extends Role {
     private int aimDir = 0;
-    private long lastShotTime = 0;
     private Random random;
     private double minX;
     private double maxX;

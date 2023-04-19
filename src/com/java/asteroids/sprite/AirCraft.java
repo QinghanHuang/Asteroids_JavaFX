@@ -14,12 +14,12 @@ import java.util.Random;
 
 
 public class AirCraft extends Role {
-    private int aimDir = 0;
+    private int aimDir ;
     private double rotationSpeed = 30;
     private double acceleration = 0.05;
     private double speedX = 0;
     private double speedY = 0;
-    private double maxSpeed = 3;
+    private static final double MAX_SPEED = 3;
 
     // Add a new property for invincibility
     private boolean invincible;
@@ -209,10 +209,10 @@ public class AirCraft extends Role {
         if (getMov() == Movement.TRUST) {
             speedX += acceleration * Math.sin(Math.toRadians(aimDir % 360));
             speedY -= acceleration * Math.cos(Math.toRadians(aimDir % 360));
-            if (speedX > maxSpeed) speedX = maxSpeed;
-            if (speedX < -maxSpeed) speedX = -maxSpeed;
-            if (speedY > maxSpeed) speedY = maxSpeed;
-            if (speedY < -maxSpeed) speedY = -maxSpeed;
+            if (speedX > MAX_SPEED) speedX = MAX_SPEED;
+            if (speedX < -MAX_SPEED) speedX = -MAX_SPEED;
+            if (speedY > MAX_SPEED) speedY = MAX_SPEED;
+            if (speedY < -MAX_SPEED) speedY = -MAX_SPEED;
 
         }
         x += speedX;
