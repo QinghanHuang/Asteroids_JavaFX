@@ -10,12 +10,11 @@ import org.junit.Test;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        stage.getIcons().add(new Image("image/aircraft.png"));
+        stage.getIcons().add(new Image("image/spaceman.png"));
         Director.getInstance().init(stage);
     }
 

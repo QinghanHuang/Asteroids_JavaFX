@@ -82,7 +82,7 @@ public class Bullet extends Role {
     }
 
     public void impactPlayer(AirCraft player) {
-        if (player != null && !player.getGroup().equals(this.getGroup()) && this.getContour().intersects(player.getContour())) {
+        if (player != null && !player.isInvincible()&& !player.getGroup().equals(this.getGroup()) && this.getContour().intersects(player.getContour())) {
             player.setAlive(false);
             this.setAlive(false);
             SoundEffect.play("/sound/explosion.wav");

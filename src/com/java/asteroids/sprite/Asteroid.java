@@ -80,7 +80,7 @@ public class Asteroid extends Role {
     }
 
     public void impactAirCraft(AirCraft airCraft) {
-        if (airCraft != null && this.getContour().intersects(airCraft.getContour())) {
+        if (airCraft != null && !airCraft.isInvincible()  && this.getContour().intersects(airCraft.getContour())) {
             airCraft.setAlive(false);
             gameScene.getExplores().add(new Explore(x, y, gameScene));
             SoundEffect.play("/sound/explosion.wav");

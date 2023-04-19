@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -48,6 +49,9 @@ public class GameScene {
     //store lives
     private List<ShowLives> showLives = new ArrayList<>();
 
+    //store hyper skills
+    private List<ShowLives> hyperSkills = new ArrayList<>();
+
     //store asteroids
     private List<Asteroid> asteroids = new ArrayList<>();
 
@@ -67,7 +71,7 @@ public class GameScene {
     private int lives;
 
     // to store extra lives from points
-    private int extraLives=0;
+    private int extraLives;
 
 
     public List<Asteroid> getAsteroids() {
@@ -109,6 +113,10 @@ public class GameScene {
         //paint showLives
         for (int i = 0; i < lives; i++) {
             showLives.get(i).paint(graphicsContext);
+        }
+        //paint hyper skills
+        for (int i = 0; i < self.getHyperLeft(); i++) {
+            hyperSkills.get(i).paint(graphicsContext);
         }
 
         //paint player in gameScene
@@ -154,10 +162,6 @@ public class GameScene {
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.fillText("Score: " + score, 20, 30);
         graphicsContext.fillText("LEVEL: " + level, 650, 30);
-        if (self != null) {
-            graphicsContext.fillText("HSJ Left: " + self.getHyperLeft(), 20, 900);
-        }
-
         //
 //        graphicsContext.fillText("alien: " + aliens.size(), 20, 60);
 //        graphicsContext.fillText("starts: " + asteroids.size(), 20, 90);
@@ -183,6 +187,7 @@ public class GameScene {
         score = 0;
         level = 1;
         lives = 3;
+        extraLives = 0;
 
         //initial player aircraft
         initPlayer();
@@ -210,8 +215,14 @@ public class GameScene {
         //initial show lives
         //set max lives for user is 5
         for (int i = 0; i < 5; i++) {
-            showLives.add(new ShowLives(20 + i * 25, 50));
+            showLives.add(new ShowLives(new Image("image/aircraft_new.png"), 20 + i * 25, 50, 20, 30));
         }
+
+        //initial hyper skills
+        for (int i = 0; i < 3; i++) {
+            hyperSkills.add(new ShowLives(new Image("image/spaceman.png"), 20 + i * 25, 90, 15, 20));
+        }
+
     }
 
 
@@ -247,12 +258,15 @@ public class GameScene {
         //May use image later
         Button backToIndex = new Button("Back");
         Button gameOver = new Button("Over");
+        backToIndex.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;");
+        gameOver.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 20px;");
+
 
         //set layout
         backToIndex.setLayoutX(1350);
         backToIndex.setLayoutY(30);
         gameOver.setLayoutX(1350);
-        gameOver.setLayoutY(60);
+        gameOver.setLayoutY(70);
 
         //set MouseClick actions
         backToIndex.setOnMouseClicked(event -> {
@@ -290,6 +304,7 @@ public class GameScene {
             initAlien();
         }
     }
+
     private void checkExtraLives() {
         if (score >= (extraLives + 1) * 10000) {
             extraLives++;
@@ -316,7 +331,7 @@ public class GameScene {
             }
 
         } else if (size == AsteroidSize.ASTEROID_MEDIUM) {
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 3; i++) {
                 Asteroid asteroid = new Asteroid(new Image("image/asteroid_big.png"), x, y, 60, 60, Group.ENEMY, Movement.FORWARD, this, pos, AsteroidSize.ASTEROID_SMALL);
                 this.getAsteroids().add(asteroid);
             }

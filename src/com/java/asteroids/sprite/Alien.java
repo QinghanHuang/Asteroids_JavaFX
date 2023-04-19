@@ -21,7 +21,7 @@ public class Alien extends Role {
     public Alien(double x, double y, int aimDir, GameScene gameScene) {
 
         super(new Image("image/alien.png"), x, y, 60, 60, Group.ENEMY, Movement.FORWARD, gameScene);
-        this.speed = 1;
+        this.speed = 2;
         random = new Random();
         this.minX = 0;
         this.maxX = 1440;
@@ -63,7 +63,11 @@ public class Alien extends Role {
 
     @Override
     public void move() {
-        aimDir += random.nextDouble() * 20 - 10; // change direction by up to 10 degrees in either direction
+        int i = random.nextInt(50);
+        if(i==1){
+
+            aimDir += random.nextDouble() * 60 - 10; // change direction by up to 10 degrees in either direction
+        }
         double newX = x + speed * Math.sin(Math.toRadians(aimDir));
         double newY = y - speed * Math.cos(Math.toRadians(aimDir));
 
@@ -114,7 +118,7 @@ public class Alien extends Role {
 
     public void impactAirCraft(AirCraft airCraft) {
 
-        if (airCraft != null && this.getContour().intersects(airCraft.getContour())) {
+        if (airCraft != null &&!airCraft.isInvincible()&& this.getContour().intersects(airCraft.getContour())) {
             airCraft.setAlive(false);
             SoundEffect.play("/sound/explosion.wav");
             gameScene.getExplores().add(new Explore(x,y,gameScene));
