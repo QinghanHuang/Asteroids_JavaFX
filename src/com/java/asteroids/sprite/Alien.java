@@ -1,6 +1,5 @@
 package com.java.asteroids.sprite;
 
-import com.java.asteroids.sprite.Bullet;
 import com.java.asteroids.scene.GameScene;
 import com.java.asteroids.util.*;
 import javafx.scene.canvas.GraphicsContext;
@@ -89,7 +88,7 @@ public class Alien extends Role {
 
     // Shoot a bullet
     public void fire() {
-        int i = random.nextInt(200);
+        int i = random.nextInt(150);
         if (i == 1) {
             // create a new bullet and add it to the game scene
             Bullet bullet = new Bullet(x, y, 5, getGroup(), aimDir, gameScene);
@@ -120,7 +119,7 @@ public class Alien extends Role {
         if (airCraft != null &&!airCraft.isInvincible()&& this.getContour().intersects(airCraft.getContour())) {
             airCraft.setAlive(false);
             SoundEffect.play("/sound/explosion.wav");
-            gameScene.getExplores().add(new Explore(x,y,gameScene));
+            gameScene.getExplores().add(new Explode(x,y,gameScene));
             this.setAlive(false);
             gameScene.checkGameOver();
         }

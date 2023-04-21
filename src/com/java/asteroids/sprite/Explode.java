@@ -5,7 +5,7 @@ import com.java.asteroids.scene.GameScene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Explore extends Sprite{
+public class Explode extends Sprite{
 
     private int count=0;
     private static Image[] images={
@@ -21,8 +21,8 @@ public class Explore extends Sprite{
     };
 
 
-    public Explore(double x, double y, GameScene gameScene) {
-        super(null, x, y, 0, 0, gameScene);
+    public Explode(double x, double y, GameScene gameScene) {
+        super(null, x, y, 200, 200, gameScene);
     }
 
     @Override

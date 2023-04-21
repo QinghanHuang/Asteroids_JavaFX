@@ -1,7 +1,6 @@
 package com.java.asteroids.controller;
 
 import com.java.asteroids.Director;
-import com.java.asteroids.scene.Index;
 import com.java.asteroids.util.Score;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -26,7 +25,8 @@ public class GameOverController {
     @FXML
     void submitClick(MouseEvent event) {
         //1. load showScore and name input
-        String name = enterName.getText();
+        String name = enterName.getText().equals("")?"Player":enterName.getText();
+        System.out.println(enterName.getText().equals(""));
         Score score = new Score(name, Integer.parseInt(showScore.getText()));
         //2.write to a file
         ArrayList<Score> scores = Director.getInstance().getScores();

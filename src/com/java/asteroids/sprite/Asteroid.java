@@ -6,7 +6,6 @@ import com.java.asteroids.util.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import java.util.List;
 import java.util.Random;
 
 public class Asteroid extends Role {
@@ -82,7 +81,7 @@ public class Asteroid extends Role {
     public void impactAirCraft(AirCraft airCraft) {
         if (airCraft != null && !airCraft.isInvincible()  && this.getContour().intersects(airCraft.getContour())) {
             airCraft.setAlive(false);
-            gameScene.getExplores().add(new Explore(x, y, gameScene));
+            gameScene.getExplores().add(new Explode(x, y, gameScene));
             SoundEffect.play("/sound/explosion.wav");
             this.setAlive(false);
             gameScene.checkGameOver();

@@ -15,7 +15,6 @@ import javafx.scene.layout.AnchorPane;
 
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -56,7 +55,7 @@ public class GameScene {
     private List<Asteroid> asteroids = new ArrayList<>();
 
     //store asteroids
-    private List<Explore> explores = new ArrayList<>();
+    private List<Explode> explodes = new ArrayList<>();
 
 
     //to store score
@@ -95,8 +94,8 @@ public class GameScene {
     }
 
 
-    public List<Explore> getExplores() {
-        return explores;
+    public List<Explode> getExplores() {
+        return explodes;
     }
 
 
@@ -152,8 +151,8 @@ public class GameScene {
 
 
         //paint explores list
-        for (int i = 0; i < explores.size(); i++) {
-            explores.get(i).paint(graphicsContext);
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(graphicsContext);
         }
 
 
@@ -200,7 +199,7 @@ public class GameScene {
     public void initPlayer() {
         self = new AirCraft(700, 450, Group.PLAYER, Movement.FLOAT, 0, this);
         // Call the blinkAndSetInvincibility method with a duration of 3 seconds and 6 blink cycles
-        self.blinkAndSetInvincibility(Duration.seconds(3), 6);
+        self.blinkAndSetInvincibility(Duration.seconds(2), 6);
     }
 
     // initial enemies
@@ -353,7 +352,7 @@ public class GameScene {
         showLives.clear();
         asteroids.clear();
         bullets.clear();
-        explores.clear();
+        explodes.clear();
 
 
     }

@@ -111,7 +111,7 @@ public class Bullet extends Role {
     public void paint(GraphicsContext graphicsContext) {
         if (!isAlive()) {
             gameScene.getBullets().remove(this);
-            gameScene.getExplores().add(new Explore(x, y, gameScene));
+            gameScene.getExplores().add(new Explode(x, y, gameScene));
             return;
         }
         super.paint(graphicsContext);

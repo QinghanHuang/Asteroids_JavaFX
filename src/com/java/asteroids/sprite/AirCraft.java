@@ -177,14 +177,14 @@ public class AirCraft extends Role {
     }
 
     private void hyperspace() {
-        if (hyperLeft > 0) {
+        if (hyperLeft > 0&&!this.invincible) {
             SoundEffect.play("/sound/hyperspace.wav");
             Random random = new Random();
             x = random.nextInt((int) Director.WIDTH);
             y = random.nextInt((int) Director.HEIGHT);
             speedX=0;
             speedY=0;
-            blinkAndSetInvincibility(Duration.seconds(3), 5);
+            blinkAndSetInvincibility(Duration.seconds(2), 6);
             hyperLeft--;
         }
 
