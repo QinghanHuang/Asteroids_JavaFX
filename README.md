@@ -56,5 +56,8 @@ Feel free to explore and customize the game as per your preferences!
 
 ## Screenshots
 
-![Gameplay Screenshot 1](/path/to/screenshot1.png)
-![Gameplay Screenshot 2](/path/to/screenshot2.png)
+![Controls Screenshot]![Controls_Asteroids](https://github.com/QinghanHuang/Asteroids_JavaFX/assets/31386972/34710e91-398d-4969-9432-4e417983c99f)
+
+
+![Gameplay Screenshot]![Gameplay](https://github.com/QinghanHuang/Asteroids_JavaFX/assets/31386972/20122577-c960-47f5-bdc6-1d241301ca5b)
+
